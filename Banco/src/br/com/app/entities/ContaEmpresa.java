@@ -1,0 +1,10 @@
+package br.com.app.entities;
+
+public class ContaEmpresa {
+
+	double emprestimoEmpresa;
+
+	public void pedirEmprestimo() {
+	}
+
+}

@@ -1,0 +1,20 @@
+package br.com.app.conta;
+
+public abstract class Conta {
+	String CPF;
+	int numero;
+	double saldo;
+	boolean ativo;
+	
+	public void debito(){}
+	public void credito(){}
+	
+	public Conta(String CPF, int numero) {
+		super();
+		this.CPF = CPF;
+		this.numero = numero;
+	}
+	
+	
+	
+}

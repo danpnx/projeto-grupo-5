@@ -1,0 +1,10 @@
+package br.com.app.entities;
+
+public class ContaEmpresa {
+		
+int contadorTalao;
+	
+	public void pediTalao(){}
+
+	
+}
