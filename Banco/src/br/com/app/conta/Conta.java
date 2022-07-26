@@ -46,20 +46,4 @@ public abstract class Conta {
 		this.saldoConta += valorCreditado;
 	}
 	// Fim do codigo Daniel
-	
-	/*
-	String CPF;
-	int numero;
-	double saldo;
-	boolean ativo;
-	
-	public void debito(){}
-	public void credito(){}
-	
-	public Conta(String CPF, int numero) {
-		super();
-		this.CPF = CPF;
-		this.numero = numero;
-	}
-	*/
 }
