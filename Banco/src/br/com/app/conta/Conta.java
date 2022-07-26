@@ -2,6 +2,8 @@ package br.com.app.conta;
 
 public abstract class Conta {
 	
+	// Inicio do codigo Daniel
+	
 	private String cpfConta;
 	private int numeroConta;
 	private double saldoConta;
@@ -43,4 +45,21 @@ public abstract class Conta {
 	public void creditarConta(double valorCreditado){
 		this.saldoConta += valorCreditado;
 	}
+	// Fim do codigo Daniel
+	
+	/*
+	String CPF;
+	int numero;
+	double saldo;
+	boolean ativo;
+	
+	public void debito(){}
+	public void credito(){}
+	
+	public Conta(String CPF, int numero) {
+		super();
+		this.CPF = CPF;
+		this.numero = numero;
+	}
+	*/
 }
