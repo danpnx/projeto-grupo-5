@@ -5,11 +5,12 @@ import java.util.ArrayList;
 public abstract class Conta {
 	
 	// Daniel
-	private String cpfConta;
+	private String cpfConta = "";
 	private int numeroConta;
 	private double saldoConta;
 	private boolean contaAtiva = false;
 	private ArrayList<MovimentoBancario> extratoMovimentoBancario = new ArrayList<>();
+	private String senhaUsuario = "";
 	
 	// Daniel
 	public String getCpfConta() {
@@ -31,7 +32,6 @@ public abstract class Conta {
 	public double getSaldoConta() {
 		return saldoConta;
 	}
-	
 	// Daniel
 	public void setSaldoConta(double novoSaldo) {
 		if(this.contaAtiva) {
@@ -49,6 +49,23 @@ public abstract class Conta {
 	// Daniel
 	public void setContaAtiva(boolean contaAtiva) {
 		this.contaAtiva = contaAtiva;
+	}
+	
+	// Daniel
+	public ArrayList<MovimentoBancario> getExtratoMovimentoBancario() {
+		return extratoMovimentoBancario;
+	}
+	// Daniel
+	public void setExtratoMovimentoBancario(ArrayList<MovimentoBancario> extratoMovimentoBancario) {
+		this.extratoMovimentoBancario = extratoMovimentoBancario;
+	}
+	// Daniel
+	public String getSenhaUsuario() {
+		return senhaUsuario;
+	}
+	// Daniel
+	public void setSenhaUsuario(String senhaUsuario) {
+		this.senhaUsuario = senhaUsuario;
 	}
 	
 	// Daniel
