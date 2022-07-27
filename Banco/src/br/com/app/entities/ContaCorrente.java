@@ -1,6 +1,6 @@
 package br.com.app.entities;
 
-public class ContaCorrente {
+public class ContaCorrente  extends Conta {
 
 	int contadorTalao;
 
