@@ -6,7 +6,7 @@ public abstract class Conta {
 	
 	// Daniel
 	private String cpfConta = "";
-	private int numeroConta = 0000010;
+	private int numeroConta;
 	private double saldoConta;
 	private boolean contaAtiva = false;
 	private ArrayList<MovimentoBancario> extratoMovimentoBancario = new ArrayList<>();
@@ -14,7 +14,7 @@ public abstract class Conta {
 	
 	// Daniel
 	public String getCpfConta() {
-		return this.cpfConta;
+		return cpfConta;
 	}
 	// Daniel
 	public void setCpfConta(String cpfConta) {
@@ -22,7 +22,7 @@ public abstract class Conta {
 	}
 	// Daniel
 	public int getNumeroConta() {
-		return this.numeroConta;
+		return numeroConta;
 	}
 	// Daniel
 	public void setNumeroConta(int numeroConta) {
@@ -30,19 +30,21 @@ public abstract class Conta {
 	}
 	// Daniel
 	public double getSaldoConta() {
-		return this.saldoConta;
+		return saldoConta;
 	}
 	// Daniel
 	public void setSaldoConta(double novoSaldo) {
 		if(this.contaAtiva) {
 			this.creditarConta(saldoConta);
+			System.out.println("Utilizando o método creditarConta()");
 		} else {
 			this.saldoConta = novoSaldo;
+			System.out.println("Utilizando a referência pro atributo this.saldoConta");
 		}
 	}
 	// Daniel
 	public boolean isContaAtiva() {
-		return this.contaAtiva;
+		return contaAtiva;
 	}
 	// Daniel
 	public void setContaAtiva(boolean contaAtiva) {
@@ -51,7 +53,7 @@ public abstract class Conta {
 	
 	// Daniel
 	public ArrayList<MovimentoBancario> getExtratoMovimentoBancario() {
-		return this.extratoMovimentoBancario;
+		return extratoMovimentoBancario;
 	}
 	// Daniel
 	public void setExtratoMovimentoBancario(ArrayList<MovimentoBancario> extratoMovimentoBancario) {
@@ -59,7 +61,7 @@ public abstract class Conta {
 	}
 	// Daniel
 	public String getSenhaUsuario() {
-		return this.senhaUsuario;
+		return senhaUsuario;
 	}
 	// Daniel
 	public void setSenhaUsuario(String senhaUsuario) {
