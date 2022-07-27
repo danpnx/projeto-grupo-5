@@ -279,6 +279,7 @@ public class Aplicativo {
 				while(listaCaracteresSenhaUsuario.size() == 0) {
 					System.out.print("A SUA SENHA DEVE CONTER PELO MENOS UM CARACTERE ESPECIAL. POR FAVOR, DIGITE NOVAMENTE: ");
 					minhaContaEmpresa.setSenhaUsuario(scanner.nextLine());
+					System.out.println();
 					listaCaracteresSenhaUsuario = new ArrayList<String>(Arrays.asList(minhaContaEmpresa.getSenhaUsuario().split("")));
 					listaCaracteresSenhaUsuario.retainAll(listaCaracteresEspeciais);
 				}
