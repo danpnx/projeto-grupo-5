@@ -8,6 +8,7 @@ public class ContaEstudantil extends Conta{
 	public void setSaldoConta(double novoSaldo) {
 		this.saldoConta = novoSaldo;
 	}
+	
 	@Override
 	public double getSaldoConta() {
 		return this.saldoConta;
@@ -26,4 +27,10 @@ public class ContaEstudantil extends Conta{
 	public void usarEstudantil() {
 		// escrever código
 	}
+	/*
+	 @Override
+	public void debitarConta(double valorDebitado) {
+		// TODO Auto-generated method stub	
+	}
+	 */
 }
