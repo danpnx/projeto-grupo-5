@@ -5,7 +5,7 @@ public class ContaEspecial extends Conta{
 	private double saldoConta;
 	private double limiteConta = 1000;
 
-	@Override
+	
 	public void setSaldoConta(double novoSaldo) {
 		this.saldoConta = novoSaldo;
 	}
@@ -25,7 +25,22 @@ public class ContaEspecial extends Conta{
 		// escrever código
 	}
 	
-	public void usarLimite() {
-		// escrever código
+	public boolean usarLimite(double valor) {
+		boolean temLimite = this.getLimiteConta() >= valor ? true : false;
+		if ( temLimite ) {
+			this.setLimiteConta(this.getLimiteConta() - valor);
+			return true;
+		}
+		return false;
+	}
+	@Override
+	public void debitarValor(double valorDebitado) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void creditarValor(double valorCreditado) {
+		// TODO Auto-generated method stub
+		
 	}
 }
