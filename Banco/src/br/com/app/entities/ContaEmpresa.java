@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ContaEmpresa extends Conta{
 	// AUTOR: DANIEL
 	
-	// ATRIBUTOS SUBCLASSE CONTA
+	// ATRIBUTOS SUBCLASSE CONTA EMPRESA
 	private double emprestimoEmpresa = 10_000.0; 
 	private String nomeEmpresa = "";
 	private String cnpjEmpresa = "";
@@ -28,6 +28,25 @@ public class ContaEmpresa extends Conta{
 	}
 	
 	// MÉTODOS SUBCLASSE CONTA EMPRESA
+	@Override
+	public void debitarValor(double valorDebitado) {
+		// verificar se tem saldo o suficiente antes da chamada do método
+		// cadastrar o movimento bancário depois da chamada do método
+		if(this.isContaAtiva()) {
+			this.saldoConta -= valorDebitado;
+			this.registrarContagemMovimentosBancarios();
+		}else {
+			this.ativarConta();
+		}
+	}
+	
+	@Override 
+	public void creditarValor(double valorCreditado) {
+		// cadastrar o movimento bancário depois da chamada do método
+		this.saldoConta += valorCreditado;
+		this.registrarContagemMovimentosBancarios();
+	}
+	
 	public void cadastrarChavePix() { 
 		if(this.isContaAtiva()) {
 			System.out.println("ENVIE E RECEBA PAGAMENTOS A QUALQUER MOMENTO E SEM CUSTOS ADICIONAIS.");
@@ -150,25 +169,6 @@ public class ContaEmpresa extends Conta{
 		}
 	}
 	
-	@Override
-	public void debitarValor(double valorDebitado) {
-		// verificar se tem saldo o suficiente antes da chamada do método
-		// cadastrar o movimento bancário depois da chamada do método
-		if(this.isContaAtiva()) {
-			this.saldoConta -= valorDebitado;
-			this.registrarContagemMovimentosBancarios();
-		}else {
-			this.ativarConta();
-		}
-	}
-	
-	@Override 
-	public void creditarValor(double valorCreditado) {
-		// cadastrar o movimento bancário depois da chamada do método
-		this.saldoConta += valorCreditado;
-		this.registrarContagemMovimentosBancarios();
-	}
-	
 	public void pagarPix(double valorPix, String chavePix){
 		if(this.isContaAtiva()) {
 			if(this.chavePix.equals("")) {
@@ -219,7 +219,8 @@ public class ContaEmpresa extends Conta{
 		for(MovimentoBancario movimento: this.getExtratoMovimentoBancario()) {
 			System.out.println(movimento.toString());
 		}
-		System.out.println("TOTAL DE MOVIMENTAÇÕES BANCÁRIAS: " + this.getContagemMovimentos());
+		System.out.println();
+		System.out.println("NÚMERO DE MOVIMENTAÇÕES BANCÁRIAS: " + this.getContagemMovimentos());
 	}
 	
 	public void pedirEmprestimo(double valorEmprestimo) {
