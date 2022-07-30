@@ -54,7 +54,29 @@ public class ContaEstudantil extends Conta{
             this.registrarContagemMovimentosBancarios();
             this.registrarMovimentoBancario(new MovimentoBancario(valorDebito, "D"));
         } else {
-            System.out.println("Saldo insuficiente.");
+            System.out.println("Saldo insuficiente para realizar o débito.");
+        }
+    }
+    
+    public void enviarValor(double valorDebito) {
+        if(this.saldoConta >= valorDebito) {
+            this.saldoConta -= valorDebito;
+            System.out.println("Transferência efetuada com sucesso!");
+            this.registrarContagemMovimentosBancarios();
+            this.registrarMovimentoBancario(new MovimentoBancario(valorDebito, "D"));
+        } else {
+            System.out.println("Saldo insuficiente para realizar a transferência.");
+        }
+    }
+    
+    public void investirValor(double valorDebito) {
+        if(this.saldoConta >= valorDebito) {
+            this.saldoConta -= valorDebito;
+            System.out.println("Investimento efetuado com sucesso!");
+            this.registrarContagemMovimentosBancarios();
+            this.registrarMovimentoBancario(new MovimentoBancario(valorDebito, "D"));
+        } else {
+            System.out.println("Saldo insuficiente para realizar o investimento.");
         }
     }
 
@@ -63,10 +85,10 @@ public class ContaEstudantil extends Conta{
         this.saldoConta = this.saldoConta + valorEmprestimo;
         this.limiteEstudantil = this.limiteEstudantil - valorEmprestimo;
         System.out.println("Empréstimo efetuado com sucesso!");
-        this.registrarMovimentoBancario(new MovimentoBancario(valorEmprestimo, "E"));
+        this.registrarMovimentoBancario(new MovimentoBancario(valorEmprestimo, "C"));
         }
         else { 
-        System.out.println("Não é possível realizar o empréstimo, sua solicitação ultrapassa o limite de empréstimo. Seu limite atual de empréstimo é: " + this.limiteEstudantil);
+        System.out.println("Saldo insuficiente para realizar o empréstimo, sua solicitação ultrapassa o limite de empréstimo. Seu limite atual de empréstimo é: " + this.limiteEstudantil);
         }
     }
     
