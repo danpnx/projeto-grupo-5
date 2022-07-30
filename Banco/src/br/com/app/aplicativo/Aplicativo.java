@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Aplicativo {
 
@@ -15,14 +16,14 @@ public class Aplicativo {
 	static ContaPoupanca minhaContaPoupanca = new ContaPoupanca();
 	static Scanner scanner = new Scanner(System.in);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		menuInicial();
 
 		scanner.close();
 	}
 	
 	// AUTOR: DANIEL
-	public static void menuInicial() {
+	public static void menuInicial() throws InterruptedException {
 		Character escolhaMenuInicial = '0';
 		do {
 			System.out.println("[NOME DO BANCO]");
@@ -55,7 +56,7 @@ public class Aplicativo {
 	}
 	
 	// AUTOR: DANIEL
-	public static void login() {	
+	public static void login() throws InterruptedException {	
 		Character escolhaLogin = '0';
 		do {
 			System.out.println("[NOME DO BANCO]");
@@ -165,7 +166,7 @@ public class Aplicativo {
 	}
 	
 	// AUTOR: DANIEL
-	public static void menuCriarConta() {
+	public static void menuCriarConta() throws InterruptedException {
 		Character escolhaMenuCriarConta = '0';
 		
 		do {
@@ -200,7 +201,39 @@ public class Aplicativo {
 				break;
 				}
 			case '2':{
-				// Criar Conta Corrente
+				// AUTOR: LUCAS PEREIRA
+				System.out.println("Olá vamos iniciar o seu cadastro!");
+			    TimeUnit.SECONDS.sleep(2);
+				System.out.println("Por favor informe seu Nome Completo: ");
+				String nomeClienteTemp = scanner.nextLine().toUpperCase();
+				System.out.println("Por favor informe seu CPF: ");
+				String cpfConta = scanner.nextLine();
+				System.out.println("Digite a Senha:");
+				String senhaTemp = scanner.nextLine();
+								
+				// VERIFICANDO SENHA
+				// RETORNA UM BOOLEANO: TRUE SE A SENHA TIVER UM CARACTERE ESPECIAL,
+				// FALSE SE A SENHA NÃO TIVER UM CARACTERE ESPECIAL.
+				// O LOOP WHILE É EXECUTADO ATÉ QUE A SUA CONDIÇÃO SE TORNE FALSA.
+				// NESTE CASO, SE O USUÁRIO NÃO DIGITAR UM CARACTERE, O RETORNO VAI SER FALSO, CERTO? 
+				// MAS NO WHILE, EU USO NEGAÇÃO DO FALSO PARA TRANSFORMÁ-LO EM VERDADEIRO,
+				// ENTÃO VAI EXECUTAR ATÉ QUE O RETORNO DE VERIFICAR SENHA SEJA VERDADEIRO (A SENHA POSSUI UM CARACTERE ESPECIAL)
+				// PORQUE AÍ A NEGAÇÃO VAI TRANSFORMÁ-LO EM FALSO E O LOOP WHILE VAI PARAR DE SER EXECUTADO
+				boolean verificacaoSenha = verificarSenha(senhaTemp);
+				while(!verificacaoSenha) {
+					System.out.println();
+					System.out.print("⚠ A SUA SENHA DEVE CONTER PELO MENOS UM CARACTERE ESPECIAL. POR FAVOR, DIGITE NOVAMENTE: ");
+					senhaTemp = scanner.nextLine();
+					verificacaoSenha = verificarSenha(senhaTemp);
+				}
+					
+				System.out.println();
+				ContaCorrente contaCorrenteTemp = new ContaCorrente(nomeClienteTemp, cpfConta, senhaTemp);
+				minhaContaCorrente = contaCorrenteTemp;
+				System.out.println("A sua Conta Corrente foi criada com Sucesso!");
+				System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+				menuContaCorrente();
+			
 				break;
 				}
 			case '3':{
@@ -220,14 +253,7 @@ public class Aplicativo {
 				System.out.print("SENHA: ");
 				String senhaTemp = scanner.nextLine();
 				
-				// VERIFICANDO SENHA
-				// RETORNA UM BOOLEANO: TRUE SE A SENHA TIVER UM CARACTERE ESPECIAL,
-				// FALSE SE A SENHA NÃO TIVER UM CARACTERE ESPECIAL.
-				// O LOOP WHILE É EXECUTADO ATÉ QUE A SUA CONDIÇÃO SE TORNE FALSA.
-				// NESTE CASO, SE O USUÁRIO NÃO DIGITAR UM CARACTERE, O RETORNO VAI SER FALSO, CERTO? 
-				// MAS NO WHILE, EU USO NEGAÇÃO DO FALSO PARA TRANSFORMÁ-LO EM VERDADEIRO,
-				// ENTÃO VAI EXECUTAR ATÉ QUE O RETORNO DE VERIFICAR SENHA SEJA VERDADEIRO (A SENHA POSSUI UM CARACTERE ESPECIAL)
-				// PORQUE AÍ A NEGAÇÃO VAI TRANSFORMÁ-LO EM FALSO E O LOOP WHILE VAI PARAR DE SER EXECUTADO
+				
 				boolean verificacaoSenha = verificarSenha(senhaTemp);
 				while(!verificacaoSenha) {
 					System.out.println();
@@ -237,7 +263,7 @@ public class Aplicativo {
 				}
 				// FIM VERIFICAÇÃO SENHA
 				
-				System.out.println();
+				scanner.nextLine();
 				System.out.println("A SUA CONTA PJ ESTÁ SENDO CRIADA...");
 				ContaEmpresa contaEmpresaTemp = new ContaEmpresa(nomeTemp, cnpjTemp, numeroTemp, senhaTemp);
 				minhaContaEmpresa = contaEmpresaTemp;
@@ -283,8 +309,9 @@ public class Aplicativo {
 	}
 	
 	// Autor
-	public static void menuContaCorrente() {
+	public static void menuContaCorrente() throws InterruptedException {
 		// Criar Menu Conta Corrente
+			
 	}
 	
 	// Autor
