@@ -44,7 +44,7 @@ public class Aplicativo {
 				escolhaMenuInicial = scanner.next().charAt(0);
 				scanner.nextLine();
 			}
-			System.out.println("------------------------------");
+			System.out.println();
 			if(escolhaMenuInicial.equals('1')) {
 				login();
 			}else if(escolhaMenuInicial.equals('2')) {
@@ -211,14 +211,6 @@ public class Aplicativo {
 				System.out.println("Digite a Senha:");
 				String senhaTemp = scanner.nextLine();
 								
-				// VERIFICANDO SENHA
-				// RETORNA UM BOOLEANO: TRUE SE A SENHA TIVER UM CARACTERE ESPECIAL,
-				// FALSE SE A SENHA NÃO TIVER UM CARACTERE ESPECIAL.
-				// O LOOP WHILE É EXECUTADO ATÉ QUE A SUA CONDIÇÃO SE TORNE FALSA.
-				// NESTE CASO, SE O USUÁRIO NÃO DIGITAR UM CARACTERE, O RETORNO VAI SER FALSO, CERTO? 
-				// MAS NO WHILE, EU USO NEGAÇÃO DO FALSO PARA TRANSFORMÁ-LO EM VERDADEIRO,
-				// ENTÃO VAI EXECUTAR ATÉ QUE O RETORNO DE VERIFICAR SENHA SEJA VERDADEIRO (A SENHA POSSUI UM CARACTERE ESPECIAL)
-				// PORQUE AÍ A NEGAÇÃO VAI TRANSFORMÁ-LO EM FALSO E O LOOP WHILE VAI PARAR DE SER EXECUTADO
 				boolean verificacaoSenha = verificarSenha(senhaTemp);
 				while(!verificacaoSenha) {
 					System.out.println();
@@ -267,14 +259,70 @@ public class Aplicativo {
 				System.out.println("A SUA CONTA PJ ESTÁ SENDO CRIADA...");
 				ContaEmpresa contaEmpresaTemp = new ContaEmpresa(nomeTemp, cnpjTemp, numeroTemp, senhaTemp);
 				minhaContaEmpresa = contaEmpresaTemp;
-				System.out.println("A SUA CONTA EMPRESA FOI CRIADA COM SUCESSO!");
+				System.out.println("CONTA PJ FOI CRIADA COM SUCESSO!");
 				minhaContaEmpresa.ativarConta();
 				System.out.println("------------------------------");
 				menuContaEmpresa();
 				break;
 				}
 			case '5':{
-				// Criar Conta Estudantil				
+				// Criar Conta Estudantil	
+				System.out.println("---------------------------------------------------");
+				System.out.println("                      BANK-DO                      ");
+				System.out.println("                'UNDER YOUR CONTROL'               ");
+				System.out.println("Seja bem vindo a um novo conceito de banco digital.");
+				System.out.println("---------------------------------------------------");
+				System.out.println("              CONTA [CONTA ESTUDANTIL]             ");
+				System.out.println("---------------------------------------------------");
+				System.out.println("Deseja ativar sua conta? Digite S para ativar e N");
+				System.out.print("para encerrar a operação: ");
+				char escolha = Character.toUpperCase(scanner.next().charAt(0));
+				scanner.nextLine();
+				
+				while(escolha != 'N' && escolha != 'S') {
+				System.out.print("Digite uma opção válida: ");
+				escolha = Character.toUpperCase(scanner.next().charAt(0));
+				scanner.nextLine();
+				}
+				
+				if(escolha == 'S') {
+				System.out.println("");
+				System.out.print("Digite o seu nome: ");
+				String nome = scanner.nextLine();
+				System.out.print("Digite o número da sua agência: ");
+				String agencia = scanner.nextLine();
+				System.out.print("Digite o número da sua Conta: ");
+				int numero = scanner.nextInt();
+				scanner.nextLine();
+				System.out.print("Digite o número do seu CPF: ");
+				String CPF = scanner.nextLine();
+				System.out.print("Digite a sua senha: ");
+				String senha = scanner.nextLine();
+				boolean verificar = verificarSenha(senha);
+				while (!verificar) {
+				System.out.println("Digite uma senha que contenha pelo menos um caractere especial: ");
+				senha = scanner.nextLine();
+				verificar = verificarSenha(senha);
+				}
+				ContaEstudantil ContaTemp = new ContaEstudantil(nome, agencia, numero, CPF, senha);
+				minhaContaEstudantil = ContaTemp;
+				minhaContaEstudantil.setContaAtiva(true);
+				
+				minhaContaEstudantil.ativarSaldo();
+				
+				System.out.println("---------------------------------------------------");
+				System.out.println("                     "+ minhaContaEstudantil.getNome() +"              ");
+				System.out.println("");
+				System.out.println("      Conta: " + minhaContaEstudantil.getNumeroConta() + "  -  " + "Agência: " + minhaContaEstudantil.getAgencia());
+				System.out.println("");
+				System.out.println(" Sua conta encontra-se ativada!" + " Seu saldo é: R$ " + minhaContaEstudantil.getSaldoConta());
+				System.out.println("----------------------------------------------------");
+				menuContaEstudantil();
+				
+				} else {
+				System.out.println("Sua operação foi encerrada.");
+				return ;
+				}
 				break;
 				}
 			case '6':{
@@ -368,7 +416,6 @@ public class Aplicativo {
 				System.out.println();
 				System.out.println("AGÊNCIA " + minhaContaEmpresa.getAgenciaEmpresa() + "\t" + "CONTA " + minhaContaEmpresa.getNumeroConta());
 				System.out.println(minhaContaEmpresa.getNomeEmpresa() + "\t" + "CNPJ " + minhaContaEmpresa.getCnpjEmpresa());
-				System.out.println("CPF " + minhaContaEmpresa.getCpfConta());
 				System.out.println("BANCO 123 ★ [NOME BANCO] INC.");
 				System.out.println("------------------------------");
 				break;
@@ -596,6 +643,13 @@ public class Aplicativo {
 					System.out.println("VALOR DISPONÍVEL PARA EMPRÉSTIMO: " + minhaContaEmpresa.getEmprestimoEmpresa());
 					System.out.print("DIGITE O VALOR QUE DESEJA SOLICITAR: ");
 					double valorTemp = Double.parseDouble(scanner.nextLine());
+					System.out.print("SENHA: ");
+					String senhaTemp = scanner.nextLine();
+					
+					while(!minhaContaEmpresa.getSenhaUsuario().equals(senhaTemp)) {
+						System.out.print("⚠ SENHA INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+						senhaTemp = scanner.nextLine();
+					}
 					System.out.println();
 					System.out.println("PROCESSANDO EMPRÉSTIMO...");
 					minhaContaEmpresa.pedirEmprestimo(valorTemp);
@@ -610,11 +664,7 @@ public class Aplicativo {
 				// EXTRATO
 				System.out.println("\t★ [NOME DO BANCO]");
 				System.out.println();
-				for(MovimentoBancario movimento: minhaContaEmpresa.getExtratoMovimentoBancario()) {
-					System.out.println(movimento.toString());
-				}
-				System.out.println();
-				System.out.println("NÚMERO DE MOVIMENTAÇÕES BANCÁRIAS: " + minhaContaEmpresa.getContagemMovimentos());
+				minhaContaEmpresa.extratoContaEmpresa();
 				System.out.println("------------------------------");
 				break;
 				}
@@ -627,6 +677,73 @@ public class Aplicativo {
 	
 	// Autor
 		public static void menuContaEstudantil() {
-			// Criar Menu Conta Estudantil
+		char escolha = '0';
+		do {	
+		System.out.println("1. Extrato da conta");
+		System.out.println("2. Depósito");
+		System.out.println("3. Pagamentos");
+		System.out.println("4. Transferência");
+		System.out.println("5. Empréstimo");
+		System.out.println("6. Investimentos");
+		System.out.println("7. Sair");	
+		System.out.println();
+		System.out.print("Digite a opção desejada: ");
+		escolha = scanner.next().charAt(0);
+		scanner.nextLine();
+		switch (escolha) {
+		case '1': {
+			for (MovimentoBancario transacao: minhaContaEstudantil.getExtratoMovimentoBancario()) {
+				System.out.println(transacao.toString());
+			}
+		break;
+		}
+		case '2':	{
+		     System.out.println("Digite o valor que deseja depositar: ");
+		     double valor = scanner.nextDouble();
+		     scanner.nextLine();
+		     minhaContaEstudantil.creditarValor(valor);
+		     minhaContaEstudantil.registrarMovimentoBancario(new MovimentoBancario(valor, "C"));
+		     System.out.println();
+		     break;
+		}
+		case '3':{
+		     System.out.println("Digite o valor que deseja debitar: ");
+		     double valor = scanner.nextDouble();
+		     scanner.nextLine();
+		     minhaContaEstudantil.debitarValor(valor);
+		     System.out.println();
+		     break;
+		}
+		case '4':{
+			break;
+		}
+		case '5':{
+			System.out.println("Seu limite disponível é: " + minhaContaEstudantil.getLimiteEstudantil());
+		    System.out.println("Digite o valor que deseja utilizar como empréstimo: ");
+		    double valor = scanner.nextDouble();
+			scanner.nextLine();
+			minhaContaEstudantil.usarEstudantil(valor);
+			System.out.println();
+			break;
+		}
+		case '6':
+			break;
+			//CDB
+			//CDI
+			//IPCA
+			//SELIC
+			
+			//digite a quantidade de meses da sua aplicacao
+			
+			// CDB = valor + (valorinv * 0.05) * 12
+			// CDI = valorinv + (valorinv * 0.05) * 12
+			// IPCA = valorinv + (valorinv * 0.05) * 12
+			// SELIC = valorinv + (valorinv * 0.05) * 12
+			
+			//DataFinal-DataInicio
+			
+			//ValordeInvestimento
+		}
+		} while(escolha != '7');
 		}
 }
