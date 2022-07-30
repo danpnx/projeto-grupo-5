@@ -43,7 +43,7 @@ public class Aplicativo {
 				escolhaMenuInicial = scanner.next().charAt(0);
 				scanner.nextLine();
 			}
-			System.out.println("------------------------------");
+			System.out.println();
 			if(escolhaMenuInicial.equals('1')) {
 				login();
 			}else if(escolhaMenuInicial.equals('2')) {
@@ -241,7 +241,7 @@ public class Aplicativo {
 				System.out.println("A SUA CONTA PJ ESTÁ SENDO CRIADA...");
 				ContaEmpresa contaEmpresaTemp = new ContaEmpresa(nomeTemp, cnpjTemp, numeroTemp, senhaTemp);
 				minhaContaEmpresa = contaEmpresaTemp;
-				System.out.println("A SUA CONTA EMPRESA FOI CRIADA COM SUCESSO!");
+				System.out.println("CONTA PJ FOI CRIADA COM SUCESSO!");
 				minhaContaEmpresa.ativarConta();
 				System.out.println("------------------------------");
 				menuContaEmpresa();
@@ -397,7 +397,6 @@ public class Aplicativo {
 				System.out.println();
 				System.out.println("AGÊNCIA " + minhaContaEmpresa.getAgenciaEmpresa() + "\t" + "CONTA " + minhaContaEmpresa.getNumeroConta());
 				System.out.println(minhaContaEmpresa.getNomeEmpresa() + "\t" + "CNPJ " + minhaContaEmpresa.getCnpjEmpresa());
-				System.out.println("CPF " + minhaContaEmpresa.getCpfConta());
 				System.out.println("BANCO 123 ★ [NOME BANCO] INC.");
 				System.out.println("------------------------------");
 				break;
@@ -625,6 +624,13 @@ public class Aplicativo {
 					System.out.println("VALOR DISPONÍVEL PARA EMPRÉSTIMO: " + minhaContaEmpresa.getEmprestimoEmpresa());
 					System.out.print("DIGITE O VALOR QUE DESEJA SOLICITAR: ");
 					double valorTemp = Double.parseDouble(scanner.nextLine());
+					System.out.print("SENHA: ");
+					String senhaTemp = scanner.nextLine();
+					
+					while(!minhaContaEmpresa.getSenhaUsuario().equals(senhaTemp)) {
+						System.out.print("⚠ SENHA INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+						senhaTemp = scanner.nextLine();
+					}
 					System.out.println();
 					System.out.println("PROCESSANDO EMPRÉSTIMO...");
 					minhaContaEmpresa.pedirEmprestimo(valorTemp);
@@ -639,11 +645,7 @@ public class Aplicativo {
 				// EXTRATO
 				System.out.println("\t★ [NOME DO BANCO]");
 				System.out.println();
-				for(MovimentoBancario movimento: minhaContaEmpresa.getExtratoMovimentoBancario()) {
-					System.out.println(movimento.toString());
-				}
-				System.out.println();
-				System.out.println("NÚMERO DE MOVIMENTAÇÕES BANCÁRIAS: " + minhaContaEmpresa.getContagemMovimentos());
+				minhaContaEmpresa.extratoContaEmpresa();
 				System.out.println("------------------------------");
 				break;
 				}
