@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class ContaPoupanca extends Conta{
 	private LocalDate diaAniversarioPoupanca=LocalDate.now();
 
+	@Override
 	public void debitarValor(double valorDebitado){
 		if(this.saldoConta>=valorDebitado) {
 			this.saldoConta -= valorDebitado;
@@ -16,6 +17,7 @@ public class ContaPoupanca extends Conta{
 	 }
 	}	
 	
+	@Override
 	public void creditarValor(double valorCreditado) {
 		this.saldoConta +=valorCreditado;
 		this.registrarContagemMovimentosBancarios();
