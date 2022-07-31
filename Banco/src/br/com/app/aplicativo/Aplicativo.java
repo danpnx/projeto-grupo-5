@@ -193,7 +193,7 @@ public class Aplicativo {
 				escolhaMenuCriarConta = scanner.next().charAt(0);
 				scanner.nextLine();
 			}
-			System.out.println("------------------------------");
+			System.out.println();
 			switch(escolhaMenuCriarConta) {
 			case '1':{
 				// Criar Conta Poupança
@@ -210,7 +210,7 @@ public class Aplicativo {
 			case '4':{
 				// Criar Conta Empresarial
 				// AUTOR: DANIEL
-				
+				System.out.println("------------------------------");
 				System.out.print("NOME DA EMPRESA: ");
 				String nomeTemp = scanner.nextLine().toUpperCase();
 				System.out.print("CNPJ: ");
@@ -248,7 +248,7 @@ public class Aplicativo {
 				break;
 				}
 			case '5':{
-				// Criar Conta Estudantil	
+				// Criar Conta Estudantil
 				System.out.println("---------------------------------------------------");
 				System.out.println("                      BANK-DO                      ");
 				System.out.println("                'UNDER YOUR CONTROL'               ");
@@ -354,7 +354,7 @@ public class Aplicativo {
 		Character escolhaMenuContaEmpresa = '0';
 		 do {
 			ArrayList<Character> opcoesMenuContaEmpresa = new ArrayList<>();
-			Collections.addAll(opcoesMenuContaEmpresa, '1','2','3','4','5','6','7');
+			Collections.addAll(opcoesMenuContaEmpresa, '1','2','3','4','5','6','7','8');
 			System.out.println("[NOME DO BANCO]");
 			System.out.println("[SLOGAN]");
 			System.out.println();
@@ -364,9 +364,9 @@ public class Aplicativo {
 			System.out.println();
 			
 			if(minhaContaEmpresa.isContaAtiva()) {
-				System.out.println("SALDO: " + minhaContaEmpresa.getSaldoConta());
+				System.out.printf("SALDO: %.2f\n", minhaContaEmpresa.getSaldoConta());
 			} else {
-				System.out.println("NENHUM SALDO DISPONÍVEL");
+				System.out.println("CONTA INATIVA");
 			}
 			System.out.println();
 			
@@ -376,7 +376,8 @@ public class Aplicativo {
 			System.out.println("\t4. RECEBER");
 			System.out.println("\t5. EMPRÉSTIMO");
 			System.out.println("\t6. EXTRATO");
-			System.out.println("\t7. SAIR");
+			System.out.println("\t7. CÂMBIO");
+			System.out.println("\t8. SAIR");
 			System.out.println();
 			
 			System.out.print("DIGITE O CÓDIGO DA OPÇÃO SELECIONADA: ");
@@ -459,7 +460,7 @@ public class Aplicativo {
 					// DÉBITO
 					if(minhaContaEmpresa.isContaAtiva()) {
 						System.out.println("PAGUE À VISTA");
-						System.out.println("SALDO: " + minhaContaEmpresa.getSaldoConta());
+						System.out.printf("SALDO ATUAL: %.2f\n", minhaContaEmpresa.getSaldoConta());
 						System.out.println();
 						System.out.print("VALOR: ");
 						double valorTemp = Double.parseDouble(scanner.nextLine());
@@ -494,7 +495,7 @@ public class Aplicativo {
 				} else if(escolhaPagamento.equals('2')) {
 					// PIX
 					System.out.println("FORMA DE PAGAMENTO: PIX");
-					System.out.println("SALDO: " + minhaContaEmpresa.getSaldoConta());
+					System.out.printf("SALDO ATUAL: %.2f\n", minhaContaEmpresa.getSaldoConta());
 					System.out.println();
 					System.out.print("CHAVE PIX: ");
 					String chavePixTemp = scanner.nextLine();
@@ -522,7 +523,7 @@ public class Aplicativo {
 					// BOLETO
 					if(minhaContaEmpresa.isContaAtiva()) {
 						System.out.println("FORMA DE PAGAMENTO: BOLETO BANCÁRIO");
-						System.out.println("SALDO: " + minhaContaEmpresa.getSaldoConta());
+						System.out.printf("SALDO ATUAL: %.2f\n", minhaContaEmpresa.getSaldoConta());
 						System.out.println();
 						
 						System.out.print("VALOR DO BOLETO: ");
@@ -650,10 +651,134 @@ public class Aplicativo {
 				break;
 				}
 			case '7':{
+				// CÂMBIO
+				System.out.println("\t★ [NOME DO BANCO]");
+				System.out.println();
+				System.out.println("TRANSFERÊNCIA INTERNACIONAL");
+				System.out.println("ENVIE E RECEBA DINHEIRO DO EXTERIOR");
+				System.out.printf("SALDO ATUAL: %.2f\n", minhaContaEmpresa.getSaldoConta());
+				System.out.println();
+				
+				System.out.println("1. ENVIAR");
+				System.out.println("2. RECEBER");
+				System.out.println("3. VOLTAR");
+				System.out.println();
+				
+				System.out.print("DIGITE O CÓDIGO DA OPÇÃO SELECIONADA: ");
+				Character escolhaCambio = scanner.next().charAt(0);
+				scanner.nextLine();
+				
+				while(escolhaCambio != '1' && escolhaCambio != '2' && escolhaCambio != '3') {
+					System.out.print("⚠ CÓDIGO INVÁLIDO! POR FAVOR, DIGITE NOVAMENTE: ");
+					escolhaCambio = scanner.next().charAt(0);
+					scanner.nextLine();
+				}
+				
+				System.out.println("------------------------------");
+				
+				if(escolhaCambio.equals('1')) {
+					// ENVIAR
+					
+					System.out.println("ENVIADO \t\t RECEBIDO");
+					System.out.println("R$ 500,00 \t→ \tU$D 96,66");
+					System.out.println();
+					
+					System.out.println("1. DÓLAR");
+					System.out.println("2. EURO");
+					System.out.println("3. VOLTAR");
+					System.out.println();
+					
+					System.out.print("DIGITE O CÓDIGO DA SUA ESCOLHA: ");
+					Character escolhaMoeda = scanner.next().charAt(0);
+					scanner.nextLine();
+					
+					while(!escolhaMoeda.equals('1') && !escolhaMoeda.equals('2') && !escolhaMoeda.equals('3')) {
+						System.out.print("⚠ OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+						escolhaMoeda = scanner.next().charAt(0);
+						scanner.nextLine();
+					}
+					
+					System.out.print("DIGITE UM VALOR PARA SER ENVIADO: ");
+					double valorTemp = Double.parseDouble(scanner.nextLine());
+					
+					while(valorTemp <= 0.0) {
+						System.out.print("⚠ DIGITE UM VALOR ACIMA DE R$ 0,0: ");
+						valorTemp = Double.parseDouble(scanner.nextLine());
+					}
+					
+					System.out.print("DIGITE A SUA SENHA: ");
+					String senhaTemp = scanner.nextLine();
+					
+					while(!minhaContaEmpresa.getSenhaUsuario().equals(senhaTemp)) {
+						System.out.print("⚠ SENHA INCORRETA! POR FAVOR, DIGITE NOVAMENTE: ");
+						senhaTemp = scanner.nextLine();
+					}
+					
+					if(escolhaMoeda.equals('1')) {
+						minhaContaEmpresa.enviarCambio(valorTemp, escolhaMoeda);
+						System.out.println("------------------------------");
+					} else if(escolhaMoeda.equals('2')) {
+						minhaContaEmpresa.enviarCambio(valorTemp, escolhaMoeda);
+						System.out.println("------------------------------");
+					}else {
+						break;
+					}
+				} else if(escolhaCambio.equals('2')) {
+					// RECEBER
+					System.out.println("RECEBIDO \t\t ENVIADO");
+					System.out.println("R$ 2.586,40 \t→ \tU$D 500,00");
+					System.out.println();
+					
+					System.out.println("1. DÓLAR");
+					System.out.println("2. EURO");
+					System.out.println("3. VOLTAR");
+					System.out.println();
+					
+					System.out.print("DIGITE O CÓDIGO DA SUA ESCOLHA: ");
+					Character escolhaMoeda = scanner.next().charAt(0);
+					scanner.nextLine();
+					
+					while(!escolhaMoeda.equals('1') && !escolhaMoeda.equals('2') && !escolhaMoeda.equals('3')) {
+						System.out.print("⚠ OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+						escolhaMoeda = scanner.next().charAt(0);
+						scanner.nextLine();
+					}
+					
+					System.out.print("DIGITE O VALOR QUE SERÁ RECEBIDO: ");
+					double valorTemp = Double.parseDouble(scanner.nextLine());
+					
+					while(valorTemp <= 0.0) {
+						System.out.print("⚠ DIGITE UM VALOR ACIMA DE R$ 0,0: ");
+						valorTemp = Double.parseDouble(scanner.nextLine());
+					}
+					
+					System.out.print("DIGITE A SUA SENHA: ");
+					String senhaTemp = scanner.nextLine();
+					
+					while(!minhaContaEmpresa.getSenhaUsuario().equals(senhaTemp)) {
+						System.out.print("⚠ SENHA INCORRETA! POR FAVOR, DIGITE NOVAMENTE: ");
+						senhaTemp = scanner.nextLine();
+					}
+					
+					if(escolhaMoeda.equals('1')) {
+						minhaContaEmpresa.receberCambio(valorTemp, escolhaMoeda);
+						System.out.println("------------------------------");
+					} else if(escolhaMoeda.equals('2')) {
+						minhaContaEmpresa.receberCambio(valorTemp, escolhaMoeda);
+						System.out.println("------------------------------");
+					}else {
+						break;
+					}
+				}else {
+					break;
+				}
+				break;
+			}
+			case '8':{
 				break;
 				}
 			}
-		 }while(!escolhaMenuContaEmpresa.equals('7'));
+		 }while(!escolhaMenuContaEmpresa.equals('8'));
 	}
 	
 	// Autor

@@ -151,7 +151,6 @@ public class ContaEmpresa extends Conta{
 				this.chavePix = chavePix;
 				System.out.println("NOVA CHAVE PIX REGISTRADA!");
 			} else {
-				scanner.close();
 				return;
 			}
 		}
@@ -183,7 +182,7 @@ public class ContaEmpresa extends Conta{
 					System.out.println("COMPROVANTE");
 					System.out.println("VALOR: \t" + valorPix);
 					System.out.println("DE: [NOME BANCO]\t" + "CNPJ: " + this.cnpjEmpresa);
-					System.out.println("AGÊNCIA: " + this.agenciaEmpresa + "\tCONTA: " + this.getNumeroConta());
+					System.out.println("AGÊNCIA: " + this.agenciaEmpresa + "\t\tCONTA: " + this.getNumeroConta());
 					System.out.println("PARA: \t" + chavePix);
 					this.registrarMovimentoBancario(new MovimentoBancario(valorPix, "PIX"));
 				} else {
@@ -268,27 +267,27 @@ public class ContaEmpresa extends Conta{
 	}
 	
 	public void anteciparRecebivel() {
-		Integer contador = 0;
 		int index = 0;
+		boolean achouRecebivel = false;
 		System.out.print("DIGITE O VALOR DO RECEBÍVEL QUE DESEJA ANTECIPAR: ");
 		Double valorTemp = Double.parseDouble(scanner.nextLine());
 		
 		if(this.getRecebiveisEmpresa().size() > 0) {
 			for(double recebivel: this.getRecebiveisEmpresa()) {
 				if(valorTemp.equals(recebivel)) {
-					ArrayList<Double> recebiveisTemp = this.getRecebiveisEmpresa();
-					recebiveisTemp.remove(index);
-					this.setRecebiveisEmpresa(recebiveisTemp);
-					this.creditarValor(valorTemp);
-					System.out.println("RECEBÍVEL ANTECIPADO. VALOR: R$ " + valorTemp);
-					this.registrarMovimentoBancario(new MovimentoBancario(valorTemp, "ANTECIPAÇÃO DE RECEBÍVEL"));
+					achouRecebivel = true;
 					break;
-				}else {
-					contador++;
 				}
-				index++;
+			index++;
 			}	
-			if(contador.equals(this.getRecebiveisEmpresa().size())) {
+			if(achouRecebivel) {
+				ArrayList<Double> recebiveisTemp = this.getRecebiveisEmpresa();
+				recebiveisTemp.remove(index);
+				this.setRecebiveisEmpresa(recebiveisTemp);
+				this.creditarValor(valorTemp);
+				System.out.println("RECEBÍVEL ANTECIPADO. VALOR: R$ " + valorTemp);
+				this.registrarMovimentoBancario(new MovimentoBancario(valorTemp, "ANTECIPAÇÃO DE RECEBÍVEL"));
+			}else {
 				System.out.println("⚠ NÃO EXISTE NENHUM RECEBÍVEL COM O VALOR R$ " + valorTemp);
 			}
 		} else {
@@ -300,6 +299,7 @@ public class ContaEmpresa extends Conta{
 		System.out.println();
 		System.out.println("A SUA CONTA AINDA NÃO FOI ATIVADA");
 		System.out.println("REALIZE UM DEPÓSITO DE NO MÍNIMO R$ 100,00 E CONTINUE COM A OPERAÇÃO");
+		System.out.println();
 		System.out.print("DESEJA REALIZAR O DEPÓSITO AGORA? S/N: ");
 		Character escolhaAtivarConta = '0';
 		escolhaAtivarConta = Character.toUpperCase(scanner.next().charAt(0));
@@ -313,6 +313,7 @@ public class ContaEmpresa extends Conta{
 		}
 		
 		if(escolhaAtivarConta.equals('S')) {
+			System.out.println();
 			System.out.print("DIGITE UM VALOR (MÍNIMO R$ 100,00): ");
 			double valorTemp = Double.parseDouble(scanner.nextLine());
 			
@@ -330,6 +331,60 @@ public class ContaEmpresa extends Conta{
 		}
 	}
 	
+	public void enviarCambio(double valorCambio, Character escolhaMoeda) {
+		if(this.isContaAtiva()) {
+			if(this.getSaldoConta() >= valorCambio) {
+				
+				if(escolhaMoeda.equals('1')) {
+					System.out.println();
+					double valorTempCambiado = valorCambio / 5.17;
+					this.debitarValor(valorCambio);
+					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "DÉBITO INTERNACIONAL DÓLAR"));
+					System.out.println("ENVIANDO... \t\t PRONTINHO!");
+					System.out.printf("R$ %.2f \t→\t U$D %.2f", valorCambio,valorTempCambiado);
+					System.out.println();
+				} else {
+					System.out.println();
+					double valorTempCambiado = valorCambio / 5.29;
+					this.debitarValor(valorCambio);
+					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "DÉBITO INTERNACIONAL EURO"));
+					System.out.println("ENVIANDO... \t\t PRONTINHO!");
+					System.out.printf("R$ %.2f \t→\t € %.2f", valorCambio,valorTempCambiado);
+					System.out.println();
+				}
+				
+			}else {
+				System.out.println("SALDO INSUFICIENTE ☹");
+				}
+		} else {
+			this.ativarConta();
+		}
+	}
+	
+	public void receberCambio(double valorCambio, Character escolhaMoeda) {
+		if(this.isContaAtiva()) {		
+				if(escolhaMoeda.equals('1')) {
+					System.out.println();
+					double valorTempCambiado = valorCambio * 5.17;
+					this.creditarValor(valorTempCambiado);
+					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "CRÉDITO INTERNACIONAL DÓLAR"));
+					System.out.println("PROCESSANDO... \t\t PRONTINHO!");
+					System.out.printf("R$ %.2f \t→\t U$D %.2f", valorTempCambiado,valorCambio);
+					System.out.println();
+				} else {
+					System.out.println();
+					double valorTempCambiado = valorCambio * 5.29;
+					this.creditarValor(valorTempCambiado);
+					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "CRÉDITO INTERNACIONAL EURO"));
+					System.out.println("PROCESSANDO... \t\t PRONTINHO!");
+					System.out.printf("R$ %.2f \t→\t € %.2f", valorTempCambiado,valorCambio);
+					System.out.println();
+				}
+		} else {
+			this.ativarConta();
+		}
+	}
+
 	// GETTERS AND SETTERS
 	public Double getEmprestimoEmpresa() {
 		return this.emprestimoEmpresa;
