@@ -396,31 +396,32 @@ public class Aplicativo {
 			scanner.nextLine();
 			switch (opcaoMenu) {
 				case '1': {
+				System.out.println("Saldo: " + minhaContaCorrente.getSaldoConta());
 				System.out.println("Digite o valor que deseja depositar");
 				System.out.print("→ ");
 			    double valor = scanner.nextDouble();
 			    scanner.nextLine();
 			    minhaContaCorrente.creditarValor(valor);
 			    System.out.println("Deposito efetuado com Sucesso!");
-			    System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());		
 			break;
 			}
 			case '2':{
+				 System.out.println("Saldo: " + minhaContaCorrente.getSaldoConta());
+				 System.out.println("Quantidade de talões disponível: " + minhaContaCorrente.getContagemTalao());
 			     System.out.println("Informe a quantidade de talão de cheque que irá querer");
 			     System.out.print("→ ");
 			     int valor = scanner.nextInt();
 			     scanner.nextLine();
 			     minhaContaCorrente.pediTalao(valor);
-			     System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
 			     break;
 			}
 			case '3':{
+				 System.out.println("Saldo: " + minhaContaCorrente.getSaldoConta());
 			     System.out.println("Digite o valor que deseja efetuar o pagamento");
 			     System.out.print("→ ");
 			     double valor = scanner.nextDouble();
 			     scanner.nextLine();
 			     minhaContaCorrente.debitarValor(valor);
-			        System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
 			     break;
 			}
 			case '4':{
