@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
+import java.lang.Math;
 
 public class Aplicativo {
 
@@ -668,7 +669,7 @@ public class Aplicativo {
 		System.out.println("4. Transferência");
 		System.out.println("5. Empréstimo");
 		System.out.println("6. Pagar empréstimo");
-		System.out.println("7. Simulador de investimentos");
+		System.out.println("7. Investimentos");
 		System.out.println("8. Sair");	
 		System.out.println();
 		System.out.print("Digite a opção desejada: ");
@@ -733,7 +734,6 @@ public class Aplicativo {
 			 senhaTemp = scanner.nextLine();}
 		     minhaContaEstudantil.debitarValor(valor);
 		     System.out.println();
-		     System.out.println("Baixe o app de investimentos do banco para investir agora.");
 		     break;
 			 }
 		case '4':{
@@ -793,9 +793,9 @@ public class Aplicativo {
 			System.out.println("Seu saldo atual é: R$ " + minhaContaEstudantil.getSaldoConta());	
 			System.out.println();	
 			System.out.println("1. CDB");
-			System.out.println("2. CDI");
-			System.out.println("3. IPCA");
-			System.out.println("4. SELIC");
+			System.out.println("2. LCI/LCA");
+			System.out.println("3. Fundo DI");
+			System.out.println("4. Tesouro SELIC");
 			System.out.println("5. Sair");	
 			System.out.println();
 			System.out.print("Digite a opção desejada: ");
@@ -808,53 +808,65 @@ public class Aplicativo {
 				System.out.print("Digite a quantidade de meses de sua aplicação: ");
 				int meses = scanner.nextInt();
 				scanner.nextLine();
-				System.out.print("Digite o valor que deseja investir: ");
+				System.out.print("Digite o valor inicial que deseja investir: R$ ");
+				double valorInicial = scanner.nextDouble();
+				scanner.nextLine();
+				System.out.print("Digite o valor de aportes mensais que deseja investir: R$ ");
 				double valor = scanner.nextDouble();
 				scanner.nextLine();
-				double CDB = valor + (valor * 0.05) * meses;
-				System.out.print("O valor investido ao final do período será de: R$ " + CDB);
-				System.out.println();
+				double CDB = valorInicial * (Math.pow(1.0055, meses)) + ((valor * (Math.pow(1.0055, meses)-1)) / 0.0055);
+				System.out.printf("O valor investido ao final do período será de: R$ %.2f\n" , CDB);
 				System.out.println("Deseja investir esse valor? Baixe agora o nosso aplicativo de investimento. Disponível para Android e iOS!");
-				break; 
+				System.out.println();
+				break;
 			}
 			case '2':{
 				System.out.print("Digite a quantidade de meses de sua aplicação: ");
 				int meses = scanner.nextInt();
 				scanner.nextLine();
-				System.out.print("Digite o valor que deseja investir: ");
+				System.out.print("Digite o valor inicial que deseja investir: R$ ");
+				double valorInicial = scanner.nextDouble();
+				scanner.nextLine();
+				System.out.print("Digite o valor de aportes mensais que deseja investir: R$ ");
 				double valor = scanner.nextDouble();
 				scanner.nextLine();
-				double CDI = valor + (valor * 0.05) * meses;
-				System.out.print("O valor investido ao final do período será de: R$ " + CDI);
-				System.out.println();
+				double LCILCA = valorInicial * (Math.pow(1.0057, meses)) + ((valor * (Math.pow(1.0057, meses)-1)) / 0.0057);
+				System.out.printf("O valor investido ao final do período será de: R$ %.2f\n" , LCILCA);
 				System.out.println("Deseja investir esse valor? Baixe agora o nosso aplicativo de investimento. Disponível para Android e iOS!");
-			    break;
+				System.out.println();
+				break;
 			}
 			case '3':{
 				System.out.print("Digite a quantidade de meses de sua aplicação: ");
 				int meses = scanner.nextInt();
 				scanner.nextLine();
-				System.out.print("Digite o valor que deseja investir: ");
+				System.out.print("Digite o valor inicial que deseja investir: R$ ");
+				double valorInicial = scanner.nextDouble();
+				scanner.nextLine();
+				System.out.print("Digite o valor de aportes mensais que deseja investir: R$ ");
 				double valor = scanner.nextDouble();
 				scanner.nextLine();
-				double IPCA = valor + (valor * 0.05) * meses;
-				System.out.print("O valor investido ao final do período será de: R$ " + IPCA);
-				System.out.println();
+				double FundoDI = valorInicial * (Math.pow(1.0056, meses)) + ((valor * (Math.pow(1.0056, meses)-1)) / 0.0056);
+				System.out.printf("O valor investido ao final do período será de: R$ %.2f\n" , FundoDI);
 				System.out.println("Deseja investir esse valor? Baixe agora o nosso aplicativo de investimento. Disponível para Android e iOS!");
-			    break;
+				System.out.println();
+				break;
 			}
 			case '4':{
 				System.out.print("Digite a quantidade de meses de sua aplicação: ");
 				int meses = scanner.nextInt();
 				scanner.nextLine();
-				System.out.print("Digite o valor que deseja investir: ");
+				System.out.print("Digite o valor inicial que deseja investir: R$ ");
+				double valorInicial = scanner.nextDouble();
+				scanner.nextLine();
+				System.out.print("Digite o valor de aportes mensais que deseja investir: R$ ");
 				double valor = scanner.nextDouble();
 				scanner.nextLine();
-				double SELIC = valor + (valor * 0.05) * meses;
-				System.out.print("O valor investido ao final do período será de: R$ " + SELIC);
-				System.out.println();
+				double selic = valorInicial * (Math.pow(1.0068, meses)) + ((valor * (Math.pow(1.0068, meses)-1)) / 0.0068);
+				System.out.printf("O valor investido ao final do período será de: R$ %.2f\n" , selic);
 				System.out.println("Deseja investir esse valor? Baixe agora o nosso aplicativo de investimento. Disponível para Android e iOS!");
-			    break;
+				System.out.println();
+				break;
 			}
 			case '5':{
 				break;
