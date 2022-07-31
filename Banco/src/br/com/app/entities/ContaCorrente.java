@@ -10,7 +10,6 @@ public class ContaCorrente extends Conta{
 	
 	Scanner entrada = new Scanner(System.in);
 	
-	
 	public ContaCorrente(){}
 	
 	public ContaCorrente(String nome, String cpf,String senhaUsuario){
@@ -18,21 +17,20 @@ public class ContaCorrente extends Conta{
 	}
 	
 	public void pediTalao(int qtd) {
-		if(this.saldoConta >= 30 * qtd) {
-			 if (contagemTalao ==0) {
-				 System.out.println("Não possui mais Talão de cheque disponível!");
-				  }else {
-					  this.contagemTalao-=qtd;
-					  this.debitarValor(30*qtd);
-					  this.registrarContagemMovimentosBancarios();
-					  System.out.println("Talão de cheque disponibilizado com sucesso");
-				  }	
-			     }else {
-			    	 System.out.println("Saldo insuficiente, efetue um deposito ");
-			     }
-				}
-	
-		@Override
+			if (this.contagemTalao < qtd) {
+				System.out.println("Não possui mais Talão de cheque disponível!");
+			}else {
+			if(this.saldoConta >= 30 * qtd) {
+				this.contagemTalao-=qtd;
+				this.debitarValor(30*qtd);
+				this.registrarContagemMovimentosBancarios();
+				System.out.println("Talão de cheque disponibilizado com sucesso");
+			}else {
+				System.out.println("Saldo insuficiente, efetue um deposito. ");
+			}
+			}	
+			}
+			@Override
 	public void debitarValor(double valorDebitado) {
 			if(this.saldoConta>=valorDebitado){
 				this.saldoConta -= valorDebitado;
