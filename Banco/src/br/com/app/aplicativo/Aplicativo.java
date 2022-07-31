@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Aplicativo {
 
@@ -15,14 +16,14 @@ public class Aplicativo {
 	static ContaPoupanca minhaContaPoupanca = new ContaPoupanca();
 	static Scanner scanner = new Scanner(System.in);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		menuInicial();
 
 		scanner.close();
 	}
 	
 	// AUTOR: DANIEL
-	public static void menuInicial() {
+	public static void menuInicial() throws InterruptedException {
 		Character escolhaMenuInicial = '0';
 		do {
 			System.out.println("[NOME DO BANCO]");
@@ -43,7 +44,7 @@ public class Aplicativo {
 				escolhaMenuInicial = scanner.next().charAt(0);
 				scanner.nextLine();
 			}
-			System.out.println("------------------------------");
+			System.out.println();
 			if(escolhaMenuInicial.equals('1')) {
 				login();
 			}else if(escolhaMenuInicial.equals('2')) {
@@ -55,7 +56,7 @@ public class Aplicativo {
 	}
 	
 	// AUTOR: DANIEL
-	public static void login() {	
+	public static void login() throws InterruptedException {	
 		Character escolhaLogin = '0';
 		do {
 			System.out.println("[NOME DO BANCO]");
@@ -165,7 +166,7 @@ public class Aplicativo {
 	}
 	
 	// AUTOR: DANIEL
-	public static void menuCriarConta() {
+	public static void menuCriarConta() throws InterruptedException {
 		Character escolhaMenuCriarConta = '0';
 		
 		do {
@@ -193,14 +194,41 @@ public class Aplicativo {
 				escolhaMenuCriarConta = scanner.next().charAt(0);
 				scanner.nextLine();
 			}
-			System.out.println("------------------------------");
+			System.out.println();
 			switch(escolhaMenuCriarConta) {
 			case '1':{
 				// Criar Conta Poupança
 				break;
 				}
 			case '2':{
-				// Criar Conta Corrente
+				// AUTOR: LUCAS PEREIRA
+				System.out.println("Olá aguarde já iremos iniciar o seu cadastro!");
+			    TimeUnit.SECONDS.sleep(2);
+				System.out.println("Por favor informe seu Nome: ");
+				String nomeClienteTemp = scanner.nextLine().toUpperCase();
+				System.out.println("Por favor informe seu CPF: ");
+				String cpfConta = scanner.nextLine();
+				System.out.println("Digite a Senha:");
+				String senhaTemp = scanner.nextLine();
+								
+				boolean verificacaoSenha = verificarSenha(senhaTemp);
+				while(!verificacaoSenha) {
+					System.out.println();
+					System.out.print("⚠ A SUA SENHA DEVE CONTER PELO MENOS UM CARACTERE ESPECIAL. POR FAVOR, DIGITE NOVAMENTE: ");
+					senhaTemp = scanner.nextLine();
+					verificacaoSenha = verificarSenha(senhaTemp);
+					System.out.println();
+				}
+					
+				System.out.println();
+				ContaCorrente contaCorrenteTemp = new ContaCorrente(nomeClienteTemp, cpfConta, senhaTemp);
+				minhaContaCorrente = contaCorrenteTemp;
+				System.out.println("xxxxxxConta Corrente criada com Sucessoxxxxx!");
+				System.out.println();
+				System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+				
+				menuContaCorrente();
+							
 				break;
 				}
 			case '3':{
@@ -210,7 +238,7 @@ public class Aplicativo {
 			case '4':{
 				// Criar Conta Empresarial
 				// AUTOR: DANIEL
-				
+				System.out.println("------------------------------");
 				System.out.print("NOME DA EMPRESA: ");
 				String nomeTemp = scanner.nextLine().toUpperCase();
 				System.out.print("CNPJ: ");
@@ -220,14 +248,7 @@ public class Aplicativo {
 				System.out.print("SENHA: ");
 				String senhaTemp = scanner.nextLine();
 				
-				// VERIFICANDO SENHA
-				// RETORNA UM BOOLEANO: TRUE SE A SENHA TIVER UM CARACTERE ESPECIAL,
-				// FALSE SE A SENHA NÃO TIVER UM CARACTERE ESPECIAL.
-				// O LOOP WHILE É EXECUTADO ATÉ QUE A SUA CONDIÇÃO SE TORNE FALSA.
-				// NESTE CASO, SE O USUÁRIO NÃO DIGITAR UM CARACTERE, O RETORNO VAI SER FALSO, CERTO? 
-				// MAS NO WHILE, EU USO NEGAÇÃO DO FALSO PARA TRANSFORMÁ-LO EM VERDADEIRO,
-				// ENTÃO VAI EXECUTAR ATÉ QUE O RETORNO DE VERIFICAR SENHA SEJA VERDADEIRO (A SENHA POSSUI UM CARACTERE ESPECIAL)
-				// PORQUE AÍ A NEGAÇÃO VAI TRANSFORMÁ-LO EM FALSO E O LOOP WHILE VAI PARAR DE SER EXECUTADO
+				
 				boolean verificacaoSenha = verificarSenha(senhaTemp);
 				while(!verificacaoSenha) {
 					System.out.println();
@@ -237,18 +258,76 @@ public class Aplicativo {
 				}
 				// FIM VERIFICAÇÃO SENHA
 				
-				System.out.println();
+				scanner.nextLine();
 				System.out.println("A SUA CONTA PJ ESTÁ SENDO CRIADA...");
 				ContaEmpresa contaEmpresaTemp = new ContaEmpresa(nomeTemp, cnpjTemp, numeroTemp, senhaTemp);
 				minhaContaEmpresa = contaEmpresaTemp;
-				System.out.println("A SUA CONTA EMPRESA FOI CRIADA COM SUCESSO!");
+				System.out.println("CONTA PJ FOI CRIADA COM SUCESSO!");
 				minhaContaEmpresa.ativarConta();
 				System.out.println("------------------------------");
 				menuContaEmpresa();
 				break;
 				}
 			case '5':{
-				// Criar Conta Estudantil				
+				// Criar Conta Estudantil
+				System.out.println("---------------------------------------------------");
+				System.out.println("                      BANK-DO                      ");
+				System.out.println("                'UNDER YOUR CONTROL'               ");
+				System.out.println("Seja bem vindo a um novo conceito de banco digital.");
+				System.out.println("---------------------------------------------------");
+				System.out.println("              CONTA [CONTA ESTUDANTIL]             ");
+				System.out.println("---------------------------------------------------");
+				System.out.println("Deseja cadastrar sua conta? Digite S ou N");
+				System.out.print("para encerrar a operação: ");
+				char escolha = Character.toUpperCase(scanner.next().charAt(0));
+				scanner.nextLine();
+				
+				while(escolha != 'N' && escolha != 'S') {
+				System.out.print("Digite uma opção válida: ");
+				escolha = Character.toUpperCase(scanner.next().charAt(0));
+				scanner.nextLine();
+				}
+				
+				if(escolha == 'S') {
+				System.out.println("");
+				System.out.print("Digite o seu nome: ");
+				String nome = scanner.nextLine();
+				System.out.print("Digite o número da sua agência: ");
+				String agencia = scanner.nextLine();
+				System.out.print("Digite o número da sua Conta: ");
+				int numero = scanner.nextInt();
+				scanner.nextLine();
+				System.out.print("Digite o número do seu CPF: ");
+				String CPF = scanner.nextLine();
+				System.out.print("Digite a sua senha: ");
+				String senha = scanner.nextLine();
+				boolean verificar = verificarSenha(senha);
+				while (!verificar) {
+				System.out.println("Digite uma senha que contenha pelo menos um caractere especial: ");
+				senha = scanner.nextLine();
+				verificar = verificarSenha(senha);
+				}
+				ContaEstudantil ContaTemp = new ContaEstudantil(nome, agencia, numero, CPF, senha);
+				minhaContaEstudantil = ContaTemp;
+				minhaContaEstudantil.setContaAtiva(true);
+				
+				minhaContaEstudantil.ativarSaldo();
+				
+				System.out.println("---------------------------------------------------");
+				System.out.println("                          "+ minhaContaEstudantil.getNome() +"                  ");
+				System.out.println("");
+				System.out.println("          Conta: " + minhaContaEstudantil.getNumeroConta() + "  -  " + "Agência: " + minhaContaEstudantil.getAgencia());
+				System.out.println("");
+				System.out.println(" Sua conta foi cadastrada!" + " Seu saldo é: R$ " + minhaContaEstudantil.getSaldoConta());
+				System.out.println("----------------------------------------------------");
+				menuContaEstudantil();
+				
+				} else {
+				System.out.println();	
+				System.out.println("Sua operação foi encerrada.");
+				System.out.println();	
+				return ;
+				}
 				break;
 				}
 			case '6':{
@@ -282,9 +361,70 @@ public class Aplicativo {
 		// Criar Menu Conta Poupança
 	}
 	
-	// Autor
-	public static void menuContaCorrente() {
+	// Autor LUCAS
+	public static void menuContaCorrente() throws InterruptedException {
 		// Criar Menu Conta Corrente
+			char opcaoMenu = '0';
+			do {
+			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			System.out.println("xxxxxxEscolha alguma das opções abaixo:xxxxx ");
+			System.out.println();
+			System.out.println("1. Depósito");
+			System.out.println("2. Talão de Cheque");
+			System.out.println("3. Pagamentos");
+			System.out.println("4. Extrato da conta");
+			System.out.println("5. Sair");	
+			System.out.println();
+			System.out.print("Digite a opção desejada: ");
+			opcaoMenu = scanner.next().charAt(0);
+			scanner.nextLine();
+			switch (opcaoMenu) {
+				case '1': {
+				System.out.println("Digite o valor que deseja depositar: ");
+			    double valor = scanner.nextDouble();
+			    scanner.nextLine();
+			    minhaContaCorrente.creditarValor(valor);
+			    System.out.println("Deposito efetuado com Sucesso!");
+			    System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+			    System.out.println();
+			    
+						
+			break;
+			}
+			case '2':{
+			     System.out.println("Informe a quantidade de talão de cheque que irá querer: ");
+			     int valor = scanner.nextInt();
+			     scanner.nextLine();
+			     minhaContaCorrente.pediTalao(valor);
+			        System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+				    System.out.println();
+			     break;
+			}
+			case '3':{
+			     System.out.println("Digite o valor que deseja efetuar o pagamento: ");
+			     double valor = scanner.nextDouble();
+			     scanner.nextLine();
+			     minhaContaCorrente.debitarValor(valor);
+			        System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+				    System.out.println();
+			     break;
+			}
+			case '4':{
+				System.out.println("Aguarde que estamos gerando seu Extrato de Movimentação");
+				TimeUnit.SECONDS.sleep(2);
+				for (MovimentoBancario transacao: minhaContaCorrente.getExtratoMovimentoBancario()) {
+					System.out.println(transacao.toString());
+					System.out.println("-------------Extrato de Movimentação-----------!");
+				    System.out.println();
+				}
+				break;
+				}
+			case '5':{
+				System.out.println("Sair");
+			}		
+			}
+			}while(opcaoMenu!= '5');
+			
 	}
 	
 	// Autor
@@ -298,7 +438,7 @@ public class Aplicativo {
 		Character escolhaMenuContaEmpresa = '0';
 		 do {
 			ArrayList<Character> opcoesMenuContaEmpresa = new ArrayList<>();
-			Collections.addAll(opcoesMenuContaEmpresa, '1','2','3','4','5','6','7');
+			Collections.addAll(opcoesMenuContaEmpresa, '1','2','3','4','5','6','7','8');
 			System.out.println("[NOME DO BANCO]");
 			System.out.println("[SLOGAN]");
 			System.out.println();
@@ -308,9 +448,9 @@ public class Aplicativo {
 			System.out.println();
 			
 			if(minhaContaEmpresa.isContaAtiva()) {
-				System.out.println("SALDO: " + minhaContaEmpresa.getSaldoConta());
+				System.out.printf("SALDO: %.2f\n", minhaContaEmpresa.getSaldoConta());
 			} else {
-				System.out.println("NENHUM SALDO DISPONÍVEL");
+				System.out.println("CONTA INATIVA");
 			}
 			System.out.println();
 			
@@ -320,7 +460,8 @@ public class Aplicativo {
 			System.out.println("\t4. RECEBER");
 			System.out.println("\t5. EMPRÉSTIMO");
 			System.out.println("\t6. EXTRATO");
-			System.out.println("\t7. SAIR");
+			System.out.println("\t7. CÂMBIO");
+			System.out.println("\t8. SAIR");
 			System.out.println();
 			
 			System.out.print("DIGITE O CÓDIGO DA OPÇÃO SELECIONADA: ");
@@ -341,7 +482,6 @@ public class Aplicativo {
 				System.out.println();
 				System.out.println("AGÊNCIA " + minhaContaEmpresa.getAgenciaEmpresa() + "\t" + "CONTA " + minhaContaEmpresa.getNumeroConta());
 				System.out.println(minhaContaEmpresa.getNomeEmpresa() + "\t" + "CNPJ " + minhaContaEmpresa.getCnpjEmpresa());
-				System.out.println("CPF " + minhaContaEmpresa.getCpfConta());
 				System.out.println("BANCO 123 ★ [NOME BANCO] INC.");
 				System.out.println("------------------------------");
 				break;
@@ -404,7 +544,7 @@ public class Aplicativo {
 					// DÉBITO
 					if(minhaContaEmpresa.isContaAtiva()) {
 						System.out.println("PAGUE À VISTA");
-						System.out.println("SALDO: " + minhaContaEmpresa.getSaldoConta());
+						System.out.printf("SALDO ATUAL: %.2f\n", minhaContaEmpresa.getSaldoConta());
 						System.out.println();
 						System.out.print("VALOR: ");
 						double valorTemp = Double.parseDouble(scanner.nextLine());
@@ -439,7 +579,7 @@ public class Aplicativo {
 				} else if(escolhaPagamento.equals('2')) {
 					// PIX
 					System.out.println("FORMA DE PAGAMENTO: PIX");
-					System.out.println("SALDO: " + minhaContaEmpresa.getSaldoConta());
+					System.out.printf("SALDO ATUAL: %.2f\n", minhaContaEmpresa.getSaldoConta());
 					System.out.println();
 					System.out.print("CHAVE PIX: ");
 					String chavePixTemp = scanner.nextLine();
@@ -467,7 +607,7 @@ public class Aplicativo {
 					// BOLETO
 					if(minhaContaEmpresa.isContaAtiva()) {
 						System.out.println("FORMA DE PAGAMENTO: BOLETO BANCÁRIO");
-						System.out.println("SALDO: " + minhaContaEmpresa.getSaldoConta());
+						System.out.printf("SALDO ATUAL: %.2f\n", minhaContaEmpresa.getSaldoConta());
 						System.out.println();
 						
 						System.out.print("VALOR DO BOLETO: ");
@@ -569,6 +709,13 @@ public class Aplicativo {
 					System.out.println("VALOR DISPONÍVEL PARA EMPRÉSTIMO: " + minhaContaEmpresa.getEmprestimoEmpresa());
 					System.out.print("DIGITE O VALOR QUE DESEJA SOLICITAR: ");
 					double valorTemp = Double.parseDouble(scanner.nextLine());
+					System.out.print("SENHA: ");
+					String senhaTemp = scanner.nextLine();
+					
+					while(!minhaContaEmpresa.getSenhaUsuario().equals(senhaTemp)) {
+						System.out.print("⚠ SENHA INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+						senhaTemp = scanner.nextLine();
+					}
 					System.out.println();
 					System.out.println("PROCESSANDO EMPRÉSTIMO...");
 					minhaContaEmpresa.pedirEmprestimo(valorTemp);
@@ -583,23 +730,349 @@ public class Aplicativo {
 				// EXTRATO
 				System.out.println("\t★ [NOME DO BANCO]");
 				System.out.println();
-				for(MovimentoBancario movimento: minhaContaEmpresa.getExtratoMovimentoBancario()) {
-					System.out.println(movimento.toString());
-				}
-				System.out.println();
-				System.out.println("NÚMERO DE MOVIMENTAÇÕES BANCÁRIAS: " + minhaContaEmpresa.getContagemMovimentos());
+				minhaContaEmpresa.extratoContaEmpresa();
 				System.out.println("------------------------------");
 				break;
 				}
 			case '7':{
+				// CÂMBIO
+				System.out.println("\t★ [NOME DO BANCO]");
+				System.out.println();
+				System.out.println("TRANSFERÊNCIA INTERNACIONAL");
+				System.out.println("ENVIE E RECEBA DINHEIRO DO EXTERIOR");
+				System.out.printf("SALDO ATUAL: %.2f\n", minhaContaEmpresa.getSaldoConta());
+				System.out.println();
+				
+				System.out.println("1. ENVIAR");
+				System.out.println("2. RECEBER");
+				System.out.println("3. VOLTAR");
+				System.out.println();
+				
+				System.out.print("DIGITE O CÓDIGO DA OPÇÃO SELECIONADA: ");
+				Character escolhaCambio = scanner.next().charAt(0);
+				scanner.nextLine();
+				
+				while(escolhaCambio != '1' && escolhaCambio != '2' && escolhaCambio != '3') {
+					System.out.print("⚠ CÓDIGO INVÁLIDO! POR FAVOR, DIGITE NOVAMENTE: ");
+					escolhaCambio = scanner.next().charAt(0);
+					scanner.nextLine();
+				}
+				
+				System.out.println("------------------------------");
+				
+				if(escolhaCambio.equals('1')) {
+					// ENVIAR
+					
+					System.out.println("ENVIADO \t\t RECEBIDO");
+					System.out.println("R$ 500,00 \t→ \tU$D 96,66");
+					System.out.println();
+					
+					System.out.println("1. DÓLAR");
+					System.out.println("2. EURO");
+					System.out.println("3. VOLTAR");
+					System.out.println();
+					
+					System.out.print("DIGITE O CÓDIGO DA SUA ESCOLHA: ");
+					Character escolhaMoeda = scanner.next().charAt(0);
+					scanner.nextLine();
+					
+					while(!escolhaMoeda.equals('1') && !escolhaMoeda.equals('2') && !escolhaMoeda.equals('3')) {
+						System.out.print("⚠ OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+						escolhaMoeda = scanner.next().charAt(0);
+						scanner.nextLine();
+					}
+					
+					System.out.print("DIGITE UM VALOR PARA SER ENVIADO: ");
+					double valorTemp = Double.parseDouble(scanner.nextLine());
+					
+					while(valorTemp <= 0.0) {
+						System.out.print("⚠ DIGITE UM VALOR ACIMA DE R$ 0,0: ");
+						valorTemp = Double.parseDouble(scanner.nextLine());
+					}
+					
+					System.out.print("DIGITE A SUA SENHA: ");
+					String senhaTemp = scanner.nextLine();
+					
+					while(!minhaContaEmpresa.getSenhaUsuario().equals(senhaTemp)) {
+						System.out.print("⚠ SENHA INCORRETA! POR FAVOR, DIGITE NOVAMENTE: ");
+						senhaTemp = scanner.nextLine();
+					}
+					
+					if(escolhaMoeda.equals('1')) {
+						minhaContaEmpresa.enviarCambio(valorTemp, escolhaMoeda);
+						System.out.println("------------------------------");
+					} else if(escolhaMoeda.equals('2')) {
+						minhaContaEmpresa.enviarCambio(valorTemp, escolhaMoeda);
+						System.out.println("------------------------------");
+					}else {
+						break;
+					}
+				} else if(escolhaCambio.equals('2')) {
+					// RECEBER
+					System.out.println("RECEBIDO \t\t ENVIADO");
+					System.out.println("R$ 2.586,40 \t→ \tU$D 500,00");
+					System.out.println();
+					
+					System.out.println("1. DÓLAR");
+					System.out.println("2. EURO");
+					System.out.println("3. VOLTAR");
+					System.out.println();
+					
+					System.out.print("DIGITE O CÓDIGO DA SUA ESCOLHA: ");
+					Character escolhaMoeda = scanner.next().charAt(0);
+					scanner.nextLine();
+					
+					while(!escolhaMoeda.equals('1') && !escolhaMoeda.equals('2') && !escolhaMoeda.equals('3')) {
+						System.out.print("⚠ OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+						escolhaMoeda = scanner.next().charAt(0);
+						scanner.nextLine();
+					}
+					
+					System.out.print("DIGITE O VALOR QUE SERÁ RECEBIDO: ");
+					double valorTemp = Double.parseDouble(scanner.nextLine());
+					
+					while(valorTemp <= 0.0) {
+						System.out.print("⚠ DIGITE UM VALOR ACIMA DE R$ 0,0: ");
+						valorTemp = Double.parseDouble(scanner.nextLine());
+					}
+					
+					System.out.print("DIGITE A SUA SENHA: ");
+					String senhaTemp = scanner.nextLine();
+					
+					while(!minhaContaEmpresa.getSenhaUsuario().equals(senhaTemp)) {
+						System.out.print("⚠ SENHA INCORRETA! POR FAVOR, DIGITE NOVAMENTE: ");
+						senhaTemp = scanner.nextLine();
+					}
+					
+					if(escolhaMoeda.equals('1')) {
+						minhaContaEmpresa.receberCambio(valorTemp, escolhaMoeda);
+						System.out.println("------------------------------");
+					} else if(escolhaMoeda.equals('2')) {
+						minhaContaEmpresa.receberCambio(valorTemp, escolhaMoeda);
+						System.out.println("------------------------------");
+					}else {
+						break;
+					}
+				}else {
+					break;
+				}
+				break;
+			}
+			case '8':{
 				break;
 				}
 			}
-		 }while(!escolhaMenuContaEmpresa.equals('7'));
+		 }while(!escolhaMenuContaEmpresa.equals('8'));
 	}
 	
-	// Autor
+	// Autor: Rizia
 		public static void menuContaEstudantil() {
-			// Criar Menu Conta Estudantil
+		char escolha = '0';
+		do {
+		System.out.println("Seu saldo atual é: R$ " + minhaContaEstudantil.getSaldoConta());	
+		System.out.println();	
+		System.out.println("1. Extrato da conta");
+		System.out.println("2. Depósito");
+		System.out.println("3. Pagamentos");
+		System.out.println("4. Transferência");
+		System.out.println("5. Empréstimo");
+		System.out.println("6. Pagar empréstimo");
+		System.out.println("7. Simulador de investimentos");
+		System.out.println("8. Sair");	
+		System.out.println();
+		System.out.print("Digite a opção desejada: ");
+		escolha = scanner.next().charAt(0);
+		scanner.nextLine();
+		
+		if (minhaContaEstudantil.getContagemMovimentos() == 10) {
+			System.out.println("Seu limite disponível é: " + minhaContaEstudantil.getLimiteEstudantil());
+			System.out.print("Deseja realizar um empréstimo? ");
+			char escol = '0';
+			escol = Character.toUpperCase(scanner.next().charAt(0));
+			
+		    while (escol != 'S' && escol != 'N') {
+		    	System.out.print("Digite uma opção válida: ");
+		    	escol = Character.toUpperCase(scanner.next().charAt(0));
+		    	}
+		    
+		    System.out.print("Digite o valor que deseja utilizar como empréstimo: ");
+		    double valor = scanner.nextDouble();
+		    scanner.nextLine();
+		    System.out.print("Digite a sua senha: ");
+			String senhaTemp = scanner.nextLine();
+			while (!minhaContaEstudantil.getSenhaUsuario().equals(senhaTemp)) {
+			System.out.print("Digite a senha correta: ");
+			senhaTemp = scanner.nextLine();}
+			minhaContaEstudantil.usarEstudantil(valor);
+			System.out.println();
+		    }
+		
+		System.out.println();
+		switch (escolha) {
+		case '1':{
+			for (MovimentoBancario transacao: minhaContaEstudantil.getExtratoMovimentoBancario()) {
+				System.out.println(transacao.toString());
+				 System.out.println();
+				 System.out.println("Quantidade de movimentos bancários: " + minhaContaEstudantil.getContagemMovimentos()); 
+			}
+		break;
+		}
+		case '2':{
+		     System.out.print("Digite o valor que deseja depositar: ");
+		     double valor = scanner.nextDouble();
+		     scanner.nextLine();
+		     System.out.print("Digite a sua senha: ");
+			 String senhaTemp = scanner.nextLine();
+			 while (!minhaContaEstudantil.getSenhaUsuario().equals(senhaTemp)) {
+			 System.out.println("Digite a senha correta: ");
+			 senhaTemp = scanner.nextLine();}
+		     minhaContaEstudantil.creditarValor(valor);
+		     minhaContaEstudantil.registrarMovimentoBancario(new MovimentoBancario(valor, "C"));
+		     System.out.println();
+		     break;
+		}
+		case '3':{
+		     System.out.print("Digite o valor que deseja debitar: ");
+		     double valor = scanner.nextDouble();
+		     scanner.nextLine();
+		     System.out.print("Digite a sua senha: ");
+			 String senhaTemp = scanner.nextLine();
+			 while (!minhaContaEstudantil.getSenhaUsuario().equals(senhaTemp)) {
+			 System.out.println("Digite a senha correta: ");
+			 senhaTemp = scanner.nextLine();}
+		     minhaContaEstudantil.debitarValor(valor);
+		     System.out.println();
+		     System.out.println("Baixe o app de investimentos do banco para investir agora.");
+		     break;
+			 }
+		case '4':{
+			System.out.print("Digite o valor que deseja enviar: ");
+		    double valor = scanner.nextDouble();
+		    scanner.nextLine();
+		    System.out.print("Digite os dados da conta da pessoa para o qual deseja enviar: ");
+		    int contaTransferencia = scanner.nextInt();
+		    scanner.nextLine();
+		    System.out.print("Digite a sua senha: ");
+		    String senhaTemp = scanner.nextLine();
+		    while (!minhaContaEstudantil.getSenhaUsuario().equals(senhaTemp)) {
+		    	System.out.println("Digite a senha correta: ");
+		    	senhaTemp = scanner.nextLine();
+		    }
+		    minhaContaEstudantil.enviarValor(valor);
+		    System.out.println();
+			break;
+		}
+		case '5':{
+			System.out.println("Seu limite disponível é: " + minhaContaEstudantil.getLimiteEstudantil());
+		    System.out.print("Digite o valor que deseja utilizar como empréstimo: ");
+		    double valor = scanner.nextDouble();
+		    scanner.nextLine();
+		    System.out.print("Digite a sua senha: ");
+			String senhaTemp = scanner.nextLine();
+			while (!minhaContaEstudantil.getSenhaUsuario().equals(senhaTemp)) {
+			System.out.println("Digite a senha correta: ");
+			senhaTemp = scanner.nextLine();}
+			minhaContaEstudantil.usarEstudantil(valor);
+			System.out.println();
+			break;
+		}
+		case '6':{
+			System.out.println("Você possui de saldo na conta: R$ " + minhaContaEstudantil.getSaldoConta());
+			System.out.println("e um débito de empréstimo no valor de : R$ " + minhaContaEstudantil.getEmprestimoSolicitado());
+			System.out.print("Quanto você deseja pagar desse débito? ");
+		    double valor = scanner.nextDouble();
+		    scanner.nextLine();
+		    System.out.print("Digite a sua senha: ");
+			String senhaTemp = scanner.nextLine();
+			while (!minhaContaEstudantil.getSenhaUsuario().equals(senhaTemp)) {
+			System.out.println("Digite a senha correta: ");
+			senhaTemp = scanner.nextLine();}
+			if (minhaContaEstudantil.getSaldoConta() >= valor) {
+			minhaContaEstudantil.pagarEmprestimo(valor);
+			System.out.println();
+			}
+			else {
+				System.out.println("Você não possui saldo para efetuar essa operação.");
+			}
+			break;
+		}	
+		case '7':{
+			char opcao = '0';
+			do {
+			System.out.println("Seu saldo atual é: R$ " + minhaContaEstudantil.getSaldoConta());	
+			System.out.println();	
+			System.out.println("1. CDB");
+			System.out.println("2. CDI");
+			System.out.println("3. IPCA");
+			System.out.println("4. SELIC");
+			System.out.println("5. Sair");	
+			System.out.println();
+			System.out.print("Digite a opção desejada: ");
+			opcao = scanner.next().charAt(0);
+			scanner.nextLine();
+			System.out.println();
+			
+			switch (opcao) {
+			case '1':{
+				System.out.print("Digite a quantidade de meses de sua aplicação: ");
+				int meses = scanner.nextInt();
+				scanner.nextLine();
+				System.out.print("Digite o valor que deseja investir: ");
+				double valor = scanner.nextDouble();
+				scanner.nextLine();
+				double CDB = valor + (valor * 0.05) * meses;
+				System.out.print("O valor investido ao final do período será de: R$ " + CDB);
+				System.out.println();
+				System.out.println("Deseja investir esse valor? Baixe agora o nosso aplicativo de investimento. Disponível para Android e iOS!");
+				break; 
+			}
+			case '2':{
+				System.out.print("Digite a quantidade de meses de sua aplicação: ");
+				int meses = scanner.nextInt();
+				scanner.nextLine();
+				System.out.print("Digite o valor que deseja investir: ");
+				double valor = scanner.nextDouble();
+				scanner.nextLine();
+				double CDI = valor + (valor * 0.05) * meses;
+				System.out.print("O valor investido ao final do período será de: R$ " + CDI);
+				System.out.println();
+				System.out.println("Deseja investir esse valor? Baixe agora o nosso aplicativo de investimento. Disponível para Android e iOS!");
+			    break;
+			}
+			case '3':{
+				System.out.print("Digite a quantidade de meses de sua aplicação: ");
+				int meses = scanner.nextInt();
+				scanner.nextLine();
+				System.out.print("Digite o valor que deseja investir: ");
+				double valor = scanner.nextDouble();
+				scanner.nextLine();
+				double IPCA = valor + (valor * 0.05) * meses;
+				System.out.print("O valor investido ao final do período será de: R$ " + IPCA);
+				System.out.println();
+				System.out.println("Deseja investir esse valor? Baixe agora o nosso aplicativo de investimento. Disponível para Android e iOS!");
+			    break;
+			}
+			case '4':{
+				System.out.print("Digite a quantidade de meses de sua aplicação: ");
+				int meses = scanner.nextInt();
+				scanner.nextLine();
+				System.out.print("Digite o valor que deseja investir: ");
+				double valor = scanner.nextDouble();
+				scanner.nextLine();
+				double SELIC = valor + (valor * 0.05) * meses;
+				System.out.print("O valor investido ao final do período será de: R$ " + SELIC);
+				System.out.println();
+				System.out.println("Deseja investir esse valor? Baixe agora o nosso aplicativo de investimento. Disponível para Android e iOS!");
+			    break;
+			}
+			case '5':{
+				break;
+				}
+			} 
+			} while (opcao != '5');
+		    }
+			break;
+		}
+		} while(escolha != '8');
 		}
 }
