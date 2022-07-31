@@ -354,9 +354,8 @@ public class ContaEmpresa extends Conta{
 					double valorTempCambiado = valorCambio / 5.29;
 					this.debitarValor(valorCambio);
 					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "DÉBITO INTERNACIONAL EURO"));
-					System.out.println("ENVIANDO... \t\t PRONTINHO!");
+					System.out.println("ENVIANDO... \t\t RECEBIDO!!");
 					System.out.printf("R$ %.2f \t→\t € %.2f", valorCambio,valorTempCambiado);
-					System.out.println();
 				}
 				
 			}else {
@@ -374,7 +373,7 @@ public class ContaEmpresa extends Conta{
 					double valorTempCambiado = valorCambio * 5.17;
 					this.creditarValor(valorTempCambiado);
 					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "CRÉDITO INTERNACIONAL DÓLAR"));
-					System.out.println("PROCESSANDO... \t\t PRONTINHO!");
+					System.out.println("PROCESSANDO... \t\t RECEBIDO!");
 					System.out.printf("R$ %.2f \t→\t U$D %.2f", valorTempCambiado,valorCambio);
 					System.out.println();
 				} else {
