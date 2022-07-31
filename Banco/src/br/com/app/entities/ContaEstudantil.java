@@ -5,8 +5,17 @@ public class ContaEstudantil extends Conta{
     private double limiteEstudantil = 5000;
 	private String agencia;
 	private String nome;
+	private double emprestimoSolicitado = 0;
     
-    public ContaEstudantil(){
+    public double getEmprestimoSolicitado() {
+		return this.emprestimoSolicitado;
+	}
+
+	public void setEmprestimoSolicitado(double emprestimoSolicitado) {
+		this.emprestimoSolicitado = emprestimoSolicitado;
+	}
+
+	public ContaEstudantil(){
     }
     
     public ContaEstudantil(String nome, String agencia, int numero, String CPF, String senha){
@@ -46,7 +55,34 @@ public class ContaEstudantil extends Conta{
     	System.out.println("Depósito efetuado com sucesso!");
     	this.registrarContagemMovimentosBancarios();
     }
-
+	
+	public void pagarEmprestimo (double valorCredito) {
+		
+        if(this.emprestimoSolicitado == 0) {
+			  System.out.println("Não existe nenhum valor de empréstimo a ser pago.");
+		} else {
+			if(valorCredito > emprestimoSolicitado) {
+				double diferenca = valorCredito - this.emprestimoSolicitado;
+				this.saldoConta += diferenca;
+				valorCredito -= diferenca;
+				this.limiteEstudantil += valorCredito;
+		        this.emprestimoSolicitado -= valorCredito;
+		        this.saldoConta -= valorCredito;
+		        System.out.println("O pagamento total do empréstimo efetuado com sucesso!");
+		        this.registrarContagemMovimentosBancarios();
+		        this.registrarMovimentoBancario(new MovimentoBancario(valorCredito, "D"));
+			} else {
+				this.limiteEstudantil += valorCredito;
+		        this.emprestimoSolicitado -= valorCredito;
+		        this.saldoConta -= valorCredito;
+		        System.out.println("O pagamento total do empréstimo efetuado com sucesso!");
+		        this.registrarContagemMovimentosBancarios();
+		        this.registrarMovimentoBancario(new MovimentoBancario(valorCredito, "D"));
+			}
+		}
+    
+    }
+	
     public void debitarValor(double valorDebito) {
         if(this.saldoConta >= valorDebito) {
             this.saldoConta -= valorDebito;
@@ -81,11 +117,13 @@ public class ContaEstudantil extends Conta{
     }
 
     public void usarEstudantil(double valorEmprestimo) {
-        if (valorEmprestimo <= this.limiteEstudantil) {
+        if (this.limiteEstudantil >= valorEmprestimo) {
         this.saldoConta = this.saldoConta + valorEmprestimo;
         this.limiteEstudantil = this.limiteEstudantil - valorEmprestimo;
+        this.emprestimoSolicitado += valorEmprestimo;
         System.out.println("Empréstimo efetuado com sucesso!");
         this.registrarMovimentoBancario(new MovimentoBancario(valorEmprestimo, "C"));
+        this.registrarContagemMovimentosBancarios();
         }
         else { 
         System.out.println("Saldo insuficiente para realizar o empréstimo, sua solicitação ultrapassa o limite de empréstimo. Seu limite atual de empréstimo é: " + this.limiteEstudantil);
