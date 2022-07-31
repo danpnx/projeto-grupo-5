@@ -327,7 +327,7 @@ public class ContaEmpresa extends Conta{
 			this.setContaAtiva(true);
 			System.out.println("DEPÓSITO EFETUADO!");
 			
-			this.registrarMovimentoBancario(new MovimentoBancario(valorTemp, "DEPÓSITO INICIAL"));
+			this.registrarMovimentoBancario(new MovimentoBancario(valorTemp, "DEPÓSITO INICIAL\t"));
 		}
 	}
 	
