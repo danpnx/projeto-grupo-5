@@ -30,8 +30,6 @@ public class ContaEmpresa extends Conta{
 	// MÉTODOS SUBCLASSE CONTA EMPRESA
 	@Override
 	public void debitarValor(double valorDebitado) {
-		// verificar se tem saldo o suficiente antes da chamada do método
-		// cadastrar o movimento bancário depois da chamada do método
 		if(this.isContaAtiva()) {
 			this.saldoConta -= valorDebitado;
 			this.registrarContagemMovimentosBancarios();
@@ -42,7 +40,6 @@ public class ContaEmpresa extends Conta{
 	
 	@Override 
 	public void creditarValor(double valorCreditado) {
-		// cadastrar o movimento bancário depois da chamada do método
 		this.saldoConta += valorCreditado;
 		this.registrarContagemMovimentosBancarios();
 	}
@@ -57,7 +54,8 @@ public class ContaEmpresa extends Conta{
 			scanner.nextLine();
 			
 			while(escolhaFazerChavePix != 'S' && escolhaFazerChavePix != 'N') {
-				System.out.print("⚠ OPÇÃO INVÁLIDA. POR FAVOR DIGITE NOVAMENTE: ");
+				System.out.println("! OPÇÃO INVÁLIDA. POR FAVOR DIGITE NOVAMENTE");
+				System.out.print("→ ");
 				escolhaFazerChavePix = Character.toUpperCase(scanner.next().charAt(0));
 			}
 			
@@ -73,7 +71,8 @@ public class ContaEmpresa extends Conta{
 				
 				System.out.println("REALIZE E RECEBA PAGAMENTOS A QUALQUER MOMENTO");
 				System.out.println();
-				System.out.print("DIGITE O CÓDIGO DA OPÇÃO SELECIONADA: ");
+				System.out.println("DIGITE O CÓDIGO DA OPÇÃO SELECIONADA");
+				System.out.print("→ ");
 				Character escolhaPix = scanner.next().charAt(0);
 				scanner.nextLine();
 				
@@ -81,7 +80,8 @@ public class ContaEmpresa extends Conta{
 				Collections.addAll(opcoesRegistroPix, '1','2','3','4');
 				
 				while(!opcoesRegistroPix.contains(escolhaPix)) {
-					System.out.print("⚠ CÓDIGO INVÁLIDO. POR FAVOR, DIGITE NOVAMENTE: ");
+					System.out.println("! CÓDIGO INVÁLIDO. POR FAVOR, DIGITE NOVAMENTE");
+					System.out.print("→ ");
 					escolhaPix = scanner.next().charAt(0);
 					scanner.nextLine();
 				}
@@ -115,6 +115,7 @@ public class ContaEmpresa extends Conta{
 					// CNPJ
 					System.out.println();
 					System.out.println("VINCULE O CNPJ DA SUA CONTA PJ À SUA CHAVE PIX");
+					System.out.println("CNPJ VINCULADO COM SUCESSO!");
 					this.registrarChavePix(this.getCnpjEmpresa());
 					break;
 					}
@@ -142,7 +143,8 @@ public class ContaEmpresa extends Conta{
 			scanner.nextLine();
 			
 			while(escolhaSubstituirChavePix != 'S' && escolhaSubstituirChavePix != 'N') {
-				System.out.print("⚠ OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+				System.out.println("! OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE");
+				System.out.print("→ ");
 				
 				escolhaSubstituirChavePix = Character.toUpperCase(scanner.next().charAt(0));
 				scanner.nextLine();
@@ -186,7 +188,7 @@ public class ContaEmpresa extends Conta{
 					System.out.println("PARA: \t" + chavePix);
 					this.registrarMovimentoBancario(new MovimentoBancario(valorPix, "PIX"));
 				} else {
-					System.out.println("SALDO INSUFICIENTE ☹");
+					System.out.println("SALDO INSUFICIENTE :(");
 				}
 			}
 		}else {
@@ -230,7 +232,7 @@ public class ContaEmpresa extends Conta{
 				System.out.println("EMPRÉSTIMO REALIZADO!");
 				this.registrarMovimentoBancario(new MovimentoBancario(valorEmprestimo, "EMPRÉSTIMO"));
 			} else {
-				System.out.println("VALOR FORA DO LIMITE DE EMPRÉSTIMO ☹");
+				System.out.println("VALOR FORA DO LIMITE DE EMPRÉSTIMO :(");
 			}
 		}else {
 			this.ativarConta();
@@ -249,11 +251,12 @@ public class ContaEmpresa extends Conta{
 	
 	public void cadastrarRecebivel() {
 		if(this.isContaAtiva()) {
-			System.out.print("DIGITE O VALOR DA CONTA: ");
+			System.out.println("DIGITE O VALOR DA CONTA");
+			System.out.print("→ ");
 			double valorTemp = Double.parseDouble(scanner.nextLine());
 			
 			while(valorTemp <= 0) {
-				System.out.print("⚠ NÃO É POSSÍVEL CADASTRAR UM VALOR MENOR OU IGUAL A ZERO. DIGITE OUTRO VALOR: ");
+				System.out.print("! NÃO É POSSÍVEL CADASTRAR UM VALOR MENOR OU IGUAL A ZERO. DIGITE OUTRO VALOR: ");
 				valorTemp = Double.parseDouble(scanner.nextLine());
 			}
 			
@@ -269,7 +272,8 @@ public class ContaEmpresa extends Conta{
 	public void anteciparRecebivel() {
 		int index = 0;
 		boolean achouRecebivel = false;
-		System.out.print("DIGITE O VALOR DO RECEBÍVEL QUE DESEJA ANTECIPAR: ");
+		System.out.println("DIGITE O VALOR DO RECEBÍVEL QUE DESEJA ANTECIPAR");
+		System.out.print("→ ");
 		Double valorTemp = Double.parseDouble(scanner.nextLine());
 		
 		if(this.getRecebiveisEmpresa().size() > 0) {
@@ -288,7 +292,7 @@ public class ContaEmpresa extends Conta{
 				System.out.println("RECEBÍVEL ANTECIPADO. VALOR: R$ " + valorTemp);
 				this.registrarMovimentoBancario(new MovimentoBancario(valorTemp, "ANTECIPAÇÃO DE RECEBÍVEL"));
 			}else {
-				System.out.println("⚠ NÃO EXISTE NENHUM RECEBÍVEL COM O VALOR R$ " + valorTemp);
+				System.out.println("! NÃO EXISTE NENHUM RECEBÍVEL COM O VALOR R$ " + valorTemp);
 			}
 		} else {
 			System.out.println("VOCÊ NÃO POSSUI NENHUMA CONTA A RECEBER");
@@ -298,7 +302,7 @@ public class ContaEmpresa extends Conta{
 	public void ativarConta() {
 		System.out.println();
 		System.out.println("A SUA CONTA AINDA NÃO FOI ATIVADA");
-		System.out.println("REALIZE UM DEPÓSITO DE NO MÍNIMO R$ 100,00 E CONTINUE COM A OPERAÇÃO");
+		System.out.println("REALIZE UM DEPÓSITO DE NO MÍNIMO R$ 1.000,00 E CONTINUE COM A OPERAÇÃO");
 		System.out.println();
 		System.out.print("DESEJA REALIZAR O DEPÓSITO AGORA? S/N: ");
 		Character escolhaAtivarConta = '0';
@@ -307,19 +311,21 @@ public class ContaEmpresa extends Conta{
 		
 		while(escolhaAtivarConta != 'S' && escolhaAtivarConta != 'N') {
 			System.out.println();
-			System.out.print("⚠ OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+			System.out.println("! OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE");
+			System.out.print("→ ");
 			escolhaAtivarConta = Character.toUpperCase(scanner.next().charAt(0));
 			scanner.nextLine();
 		}
 		
 		if(escolhaAtivarConta.equals('S')) {
 			System.out.println();
-			System.out.print("DIGITE UM VALOR (MÍNIMO R$ 100,00): ");
+			System.out.println("DIGITE UM VALOR (MÍNIMO R$ 1.000,00)");
+			System.out.print("→ ");
 			double valorTemp = Double.parseDouble(scanner.nextLine());
 			
-			while(valorTemp < 100.0) {
+			while(valorTemp < 1000.0) {
 				System.out.println();
-				System.out.print("⚠ VALOR INVÁLIDO. POR FAVOR, DIGITE NOVAMENTE (MÍNIMO R$ 100,00): ");
+				System.out.print("! VALOR INVÁLIDO. POR FAVOR, DIGITE NOVAMENTE (MÍNIMO R$ 100,00): ");
 				valorTemp = Double.parseDouble(scanner.nextLine());
 			}
 			
@@ -354,7 +360,7 @@ public class ContaEmpresa extends Conta{
 				}
 				
 			}else {
-				System.out.println("SALDO INSUFICIENTE ☹");
+				System.out.println("SALDO INSUFICIENTE :(");
 				}
 		} else {
 			this.ativarConta();
