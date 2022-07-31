@@ -3,17 +3,17 @@ package br.com.app.entities;
 import java.util.Scanner;
 
 public class ContaCorrente extends Conta{
-	
-	
-	
+
 	private int contagemTalao = 3;
+	private String nomeCliente = "";
 	
 	Scanner entrada = new Scanner(System.in);
-	
 	
 	public ContaCorrente(){}
 	
 	public ContaCorrente(String nome, String cpf,String senhaUsuario){
+		this.setNomeCliente(nome);
+		this.setCpfConta(cpf);
 		this.setSenhaUsuario(senhaUsuario);
 	}
 	
@@ -30,7 +30,7 @@ public class ContaCorrente extends Conta{
 			     }else {
 			    	 System.out.println("Saldo insuficiente, efetue um deposito ");
 			     }
-				}
+	}
 	
 		@Override
 	public void debitarValor(double valorDebitado) {
@@ -62,7 +62,7 @@ public class ContaCorrente extends Conta{
 		
 	public void depositoConta() {
 		System.out.println();
-		System.out.println("Deseja realizar uma deposito? S/N");
+		System.out.print("Deseja realizar uma deposito? S/N: ");
 		Character depositarAgora = '0';
 		depositarAgora = Character.toUpperCase(scanner.next().charAt(0));
 		scanner.nextLine();
@@ -81,6 +81,14 @@ public class ContaCorrente extends Conta{
 			this.setContaAtiva(true);
 			System.out.println("Deposito realizado com Sucesso!");
 					}
+	}
+
+	public String getNomeCliente() {
+		return this.nomeCliente;
+	}
+
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
 	}
 }	
 	
