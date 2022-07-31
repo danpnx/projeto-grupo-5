@@ -2,58 +2,42 @@ package br.com.app.entities;
 
 import java.time.LocalDate;
 
-//Adriana
+//Autor: Adriana
 public class ContaPoupanca extends Conta{
-	private int diaAniversarioPoupanca;
-	private double saldoConta;
+	private LocalDate diaAniversarioPoupanca=LocalDate.now();
 
-	// Adriana
 	@Override
-	public void setSaldoConta(double novoSaldo) {
-		this.saldoConta = novoSaldo;
-	}
+	public void debitarValor(double valorDebitado){
+		if(this.saldoConta>=valorDebitado) {
+			this.saldoConta -= valorDebitado;
+			this.registrarContagemMovimentosBancarios();
+			this.registrarMovimentoBancario(new MovimentoBancario(valorDebitado, "Saque"));
+			}else {
+				System.out.println("Saldo Insuficiente");
+	 }
+	}	
 	
-	// Adriana
 	@Override
-	public double getSaldoConta() {
-		return this.saldoConta;
+	public void creditarValor(double valorCreditado) {
+		this.saldoConta +=valorCreditado;
+		this.registrarContagemMovimentosBancarios();
+		this.registrarMovimentoBancario(new MovimentoBancario(valorCreditado, "Depósito"));
 	}
 	
-	// Adriana
-	public void pagarDebito(double valorDebito) {
-		// escrever código
-	}
-	
-	// Adriana
-	public void correcao() {
-		// escrever código
-	}
-	
-	// Adriana
-	public int getDiaAniversarioPoupanca() {
-		return this.diaAniversarioPoupanca;
-	}
-	
-	// Adriana
-	public void setDiaAniversarioPoupanca(int diaAniversarioPoupanca) {
-		this.diaAniversarioPoupanca = diaAniversarioPoupanca;
-	}
-	
-	// Adriana
-	public void saque(double valor) {   // publig string sacar(double valor)
-		MovimentoBancario tr = new MovimentoBancario();
-		LocalDate dataTemp = LocalDate.now();
-		tr.setDataMovimento(dataTemp);
-		tr.setTipoMovimento("Saque");
-		tr.setValorMovimento(valor);
-		System.out.println("Informe o valor para saque: ");
-		if(this.saldoConta < valor) {
-			System.out.println("Saldo Insuficiente");   // return "Saldo Insuficiente"
+	public boolean verificarAniversario(LocalDate data) {
+		if(this.diaAniversarioPoupanca.equals(data)) {
+			return true;
 		}else {
-			this.registrarMovimentoBancario(tr);
-			this.saldoConta -= valor;
-			System.out.println("Saque efetuado com sucesso");
-			System.out.println("Saldo Atualizado" + this.saldoConta);  //return saldo
+			return false;
 		}
 	}
-}
+	
+	public void corrigirSaldo(double valor) {
+		this.saldoConta+=(this.saldoConta*0.005);
+		this.creditarValor(valor);
+	}
+	
+	public void setDiaAniversarioPoupanca(LocalDate	 diaAniversarioPoupanca) {
+		this.diaAniversarioPoupanca = diaAniversarioPoupanca;
+	}
+}	

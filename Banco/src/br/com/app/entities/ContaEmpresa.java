@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ContaEmpresa extends Conta{
 	// AUTOR: DANIEL
 	
-	// ATRIBUTOS SUBCLASSE CONTA
+	// ATRIBUTOS SUBCLASSE CONTA EMPRESA
 	private double emprestimoEmpresa = 10_000.0; 
 	private String nomeEmpresa = "";
 	private String cnpjEmpresa = "";
@@ -28,6 +28,22 @@ public class ContaEmpresa extends Conta{
 	}
 	
 	// MÉTODOS SUBCLASSE CONTA EMPRESA
+	@Override
+	public void debitarValor(double valorDebitado) {
+		if(this.isContaAtiva()) {
+			this.saldoConta -= valorDebitado;
+			this.registrarContagemMovimentosBancarios();
+		}else {
+			this.ativarConta();
+		}
+	}
+	
+	@Override 
+	public void creditarValor(double valorCreditado) {
+		this.saldoConta += valorCreditado;
+		this.registrarContagemMovimentosBancarios();
+	}
+	
 	public void cadastrarChavePix() { 
 		if(this.isContaAtiva()) {
 			System.out.println("ENVIE E RECEBA PAGAMENTOS A QUALQUER MOMENTO E SEM CUSTOS ADICIONAIS.");
@@ -38,7 +54,8 @@ public class ContaEmpresa extends Conta{
 			scanner.nextLine();
 			
 			while(escolhaFazerChavePix != 'S' && escolhaFazerChavePix != 'N') {
-				System.out.print("⚠ OPÇÃO INVÁLIDA. POR FAVOR DIGITE NOVAMENTE: ");
+				System.out.println("! OPÇÃO INVÁLIDA. POR FAVOR DIGITE NOVAMENTE");
+				System.out.print("→ ");
 				escolhaFazerChavePix = Character.toUpperCase(scanner.next().charAt(0));
 			}
 			
@@ -54,7 +71,8 @@ public class ContaEmpresa extends Conta{
 				
 				System.out.println("REALIZE E RECEBA PAGAMENTOS A QUALQUER MOMENTO");
 				System.out.println();
-				System.out.print("DIGITE O CÓDIGO DA OPÇÃO SELECIONADA: ");
+				System.out.println("DIGITE O CÓDIGO DA OPÇÃO SELECIONADA");
+				System.out.print("→ ");
 				Character escolhaPix = scanner.next().charAt(0);
 				scanner.nextLine();
 				
@@ -62,7 +80,8 @@ public class ContaEmpresa extends Conta{
 				Collections.addAll(opcoesRegistroPix, '1','2','3','4');
 				
 				while(!opcoesRegistroPix.contains(escolhaPix)) {
-					System.out.print("⚠ CÓDIGO INVÁLIDO. POR FAVOR, DIGITE NOVAMENTE: ");
+					System.out.println("! CÓDIGO INVÁLIDO. POR FAVOR, DIGITE NOVAMENTE");
+					System.out.print("→ ");
 					escolhaPix = scanner.next().charAt(0);
 					scanner.nextLine();
 				}
@@ -96,6 +115,7 @@ public class ContaEmpresa extends Conta{
 					// CNPJ
 					System.out.println();
 					System.out.println("VINCULE O CNPJ DA SUA CONTA PJ À SUA CHAVE PIX");
+					System.out.println("CNPJ VINCULADO COM SUCESSO!");
 					this.registrarChavePix(this.getCnpjEmpresa());
 					break;
 					}
@@ -123,7 +143,8 @@ public class ContaEmpresa extends Conta{
 			scanner.nextLine();
 			
 			while(escolhaSubstituirChavePix != 'S' && escolhaSubstituirChavePix != 'N') {
-				System.out.print("⚠ OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+				System.out.println("! OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE");
+				System.out.print("→ ");
 				
 				escolhaSubstituirChavePix = Character.toUpperCase(scanner.next().charAt(0));
 				scanner.nextLine();
@@ -132,7 +153,6 @@ public class ContaEmpresa extends Conta{
 				this.chavePix = chavePix;
 				System.out.println("NOVA CHAVE PIX REGISTRADA!");
 			} else {
-				scanner.close();
 				return;
 			}
 		}
@@ -150,25 +170,6 @@ public class ContaEmpresa extends Conta{
 		}
 	}
 	
-	@Override
-	public void debitarValor(double valorDebitado) {
-		// verificar se tem saldo o suficiente antes da chamada do método
-		// cadastrar o movimento bancário depois da chamada do método
-		if(this.isContaAtiva()) {
-			this.saldoConta -= valorDebitado;
-			this.registrarContagemMovimentosBancarios();
-		}else {
-			this.ativarConta();
-		}
-	}
-	
-	@Override 
-	public void creditarValor(double valorCreditado) {
-		// cadastrar o movimento bancário depois da chamada do método
-		this.saldoConta += valorCreditado;
-		this.registrarContagemMovimentosBancarios();
-	}
-	
 	public void pagarPix(double valorPix, String chavePix){
 		if(this.isContaAtiva()) {
 			if(this.chavePix.equals("")) {
@@ -183,11 +184,11 @@ public class ContaEmpresa extends Conta{
 					System.out.println("COMPROVANTE");
 					System.out.println("VALOR: \t" + valorPix);
 					System.out.println("DE: [NOME BANCO]\t" + "CNPJ: " + this.cnpjEmpresa);
-					System.out.println("AGÊNCIA: " + this.agenciaEmpresa + "\tCONTA: " + this.getNumeroConta());
+					System.out.println("AGÊNCIA: " + this.agenciaEmpresa + "\t\tCONTA: " + this.getNumeroConta());
 					System.out.println("PARA: \t" + chavePix);
 					this.registrarMovimentoBancario(new MovimentoBancario(valorPix, "PIX"));
 				} else {
-					System.out.println("SALDO INSUFICIENTE ☹");
+					System.out.println("SALDO INSUFICIENTE :(");
 				}
 			}
 		}else {
@@ -219,7 +220,8 @@ public class ContaEmpresa extends Conta{
 		for(MovimentoBancario movimento: this.getExtratoMovimentoBancario()) {
 			System.out.println(movimento.toString());
 		}
-		System.out.println("TOTAL DE MOVIMENTAÇÕES BANCÁRIAS: " + this.getContagemMovimentos());
+		System.out.println();
+		System.out.println("NÚMERO DE MOVIMENTAÇÕES BANCÁRIAS: " + this.getContagemMovimentos());
 	}
 	
 	public void pedirEmprestimo(double valorEmprestimo) {
@@ -230,7 +232,7 @@ public class ContaEmpresa extends Conta{
 				System.out.println("EMPRÉSTIMO REALIZADO!");
 				this.registrarMovimentoBancario(new MovimentoBancario(valorEmprestimo, "EMPRÉSTIMO"));
 			} else {
-				System.out.println("VALOR FORA DO LIMITE DE EMPRÉSTIMO ☹");
+				System.out.println("VALOR FORA DO LIMITE DE EMPRÉSTIMO :(");
 			}
 		}else {
 			this.ativarConta();
@@ -249,11 +251,12 @@ public class ContaEmpresa extends Conta{
 	
 	public void cadastrarRecebivel() {
 		if(this.isContaAtiva()) {
-			System.out.print("DIGITE O VALOR DA CONTA: ");
+			System.out.println("DIGITE O VALOR DA CONTA");
+			System.out.print("→ ");
 			double valorTemp = Double.parseDouble(scanner.nextLine());
 			
 			while(valorTemp <= 0) {
-				System.out.print("⚠ NÃO É POSSÍVEL CADASTRAR UM VALOR MENOR OU IGUAL A ZERO. DIGITE OUTRO VALOR: ");
+				System.out.print("! NÃO É POSSÍVEL CADASTRAR UM VALOR MENOR OU IGUAL A ZERO. DIGITE OUTRO VALOR: ");
 				valorTemp = Double.parseDouble(scanner.nextLine());
 			}
 			
@@ -267,28 +270,29 @@ public class ContaEmpresa extends Conta{
 	}
 	
 	public void anteciparRecebivel() {
-		Integer contador = 0;
 		int index = 0;
-		System.out.print("DIGITE O VALOR DO RECEBÍVEL QUE DESEJA ANTECIPAR: ");
+		boolean achouRecebivel = false;
+		System.out.println("DIGITE O VALOR DO RECEBÍVEL QUE DESEJA ANTECIPAR");
+		System.out.print("→ ");
 		Double valorTemp = Double.parseDouble(scanner.nextLine());
 		
 		if(this.getRecebiveisEmpresa().size() > 0) {
 			for(double recebivel: this.getRecebiveisEmpresa()) {
 				if(valorTemp.equals(recebivel)) {
-					ArrayList<Double> recebiveisTemp = this.getRecebiveisEmpresa();
-					recebiveisTemp.remove(index);
-					this.setRecebiveisEmpresa(recebiveisTemp);
-					this.creditarValor(valorTemp);
-					System.out.println("RECEBÍVEL ANTECIPADO. VALOR: R$ " + valorTemp);
-					this.registrarMovimentoBancario(new MovimentoBancario(valorTemp, "ANTECIPAÇÃO DE RECEBÍVEL"));
+					achouRecebivel = true;
 					break;
-				}else {
-					contador++;
 				}
-				index++;
+			index++;
 			}	
-			if(contador.equals(this.getRecebiveisEmpresa().size())) {
-				System.out.println("⚠ NÃO EXISTE NENHUM RECEBÍVEL COM O VALOR R$ " + valorTemp);
+			if(achouRecebivel) {
+				ArrayList<Double> recebiveisTemp = this.getRecebiveisEmpresa();
+				recebiveisTemp.remove(index);
+				this.setRecebiveisEmpresa(recebiveisTemp);
+				this.creditarValor(valorTemp);
+				System.out.println("RECEBÍVEL ANTECIPADO. VALOR: R$ " + valorTemp);
+				this.registrarMovimentoBancario(new MovimentoBancario(valorTemp, "ANTECIPAÇÃO DE RECEBÍVEL"));
+			}else {
+				System.out.println("! NÃO EXISTE NENHUM RECEBÍVEL COM O VALOR R$ " + valorTemp);
 			}
 		} else {
 			System.out.println("VOCÊ NÃO POSSUI NENHUMA CONTA A RECEBER");
@@ -298,7 +302,8 @@ public class ContaEmpresa extends Conta{
 	public void ativarConta() {
 		System.out.println();
 		System.out.println("A SUA CONTA AINDA NÃO FOI ATIVADA");
-		System.out.println("REALIZE UM DEPÓSITO DE NO MÍNIMO R$ 100,00 E CONTINUE COM A OPERAÇÃO");
+		System.out.println("REALIZE UM DEPÓSITO DE NO MÍNIMO R$ 1.000,00 E CONTINUE COM A OPERAÇÃO");
+		System.out.println();
 		System.out.print("DESEJA REALIZAR O DEPÓSITO AGORA? S/N: ");
 		Character escolhaAtivarConta = '0';
 		escolhaAtivarConta = Character.toUpperCase(scanner.next().charAt(0));
@@ -306,18 +311,21 @@ public class ContaEmpresa extends Conta{
 		
 		while(escolhaAtivarConta != 'S' && escolhaAtivarConta != 'N') {
 			System.out.println();
-			System.out.print("⚠ OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE: ");
+			System.out.println("! OPÇÃO INVÁLIDA. POR FAVOR, DIGITE NOVAMENTE");
+			System.out.print("→ ");
 			escolhaAtivarConta = Character.toUpperCase(scanner.next().charAt(0));
 			scanner.nextLine();
 		}
 		
 		if(escolhaAtivarConta.equals('S')) {
-			System.out.print("DIGITE UM VALOR (MÍNIMO R$ 100,00): ");
+			System.out.println();
+			System.out.println("DIGITE UM VALOR (MÍNIMO R$ 1.000,00)");
+			System.out.print("→ ");
 			double valorTemp = Double.parseDouble(scanner.nextLine());
 			
-			while(valorTemp < 100.0) {
+			while(valorTemp < 1000.0) {
 				System.out.println();
-				System.out.print("⚠ VALOR INVÁLIDO. POR FAVOR, DIGITE NOVAMENTE (MÍNIMO R$ 100,00): ");
+				System.out.print("! VALOR INVÁLIDO. POR FAVOR, DIGITE NOVAMENTE (MÍNIMO R$ 100,00): ");
 				valorTemp = Double.parseDouble(scanner.nextLine());
 			}
 			
@@ -325,10 +333,63 @@ public class ContaEmpresa extends Conta{
 			this.setContaAtiva(true);
 			System.out.println("DEPÓSITO EFETUADO!");
 			
-			this.registrarMovimentoBancario(new MovimentoBancario(valorTemp, "DEPÓSITO INICIAL"));
+			this.registrarMovimentoBancario(new MovimentoBancario(valorTemp, "DEPÓSITO INICIAL\t"));
 		}
 	}
 	
+	public void enviarCambio(double valorCambio, Character escolhaMoeda) {
+		if(this.isContaAtiva()) {
+			if(this.getSaldoConta() >= valorCambio) {
+				
+				if(escolhaMoeda.equals('1')) {
+					System.out.println();
+					double valorTempCambiado = valorCambio / 5.17;
+					this.debitarValor(valorCambio);
+					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "DÉBITO INTERNACIONAL DÓLAR"));
+					System.out.println("ENVIANDO... \t\t PRONTINHO!");
+					System.out.printf("R$ %.2f \t→\t U$D %.2f", valorCambio,valorTempCambiado);
+					System.out.println();
+				} else {
+					System.out.println();
+					double valorTempCambiado = valorCambio / 5.29;
+					this.debitarValor(valorCambio);
+					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "DÉBITO INTERNACIONAL EURO"));
+					System.out.println("ENVIANDO... \t\t RECEBIDO!!");
+					System.out.printf("R$ %.2f \t→\t € %.2f", valorCambio,valorTempCambiado);
+				}
+				
+			}else {
+				System.out.println("SALDO INSUFICIENTE :(");
+				}
+		} else {
+			this.ativarConta();
+		}
+	}
+	
+	public void receberCambio(double valorCambio, Character escolhaMoeda) {
+		if(this.isContaAtiva()) {		
+				if(escolhaMoeda.equals('1')) {
+					System.out.println();
+					double valorTempCambiado = valorCambio * 5.17;
+					this.creditarValor(valorTempCambiado);
+					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "CRÉDITO INTERNACIONAL DÓLAR"));
+					System.out.println("PROCESSANDO... \t\t RECEBIDO!");
+					System.out.printf("R$ %.2f \t→\t U$D %.2f", valorTempCambiado,valorCambio);
+					System.out.println();
+				} else {
+					System.out.println();
+					double valorTempCambiado = valorCambio * 5.29;
+					this.creditarValor(valorTempCambiado);
+					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "CRÉDITO INTERNACIONAL EURO"));
+					System.out.println("PROCESSANDO... \t\t PRONTINHO!");
+					System.out.printf("R$ %.2f \t→\t € %.2f", valorTempCambiado,valorCambio);
+					System.out.println();
+				}
+		} else {
+			this.ativarConta();
+		}
+	}
+
 	// GETTERS AND SETTERS
 	public Double getEmprestimoEmpresa() {
 		return this.emprestimoEmpresa;
