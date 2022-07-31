@@ -17,17 +17,18 @@ public class ContaCorrente extends Conta{
 		this.setSenhaUsuario(senhaUsuario);
 	}
 	
-	public void pediTalao() {
-		if(this.saldoConta >= 30) {
+	public void pediTalao(int qtd) {
+		if(this.saldoConta >= 30 * qtd) {
 			 if (contagemTalao ==0) {
 				 System.out.println("Não possui mais Talão de cheque disponível!");
 				  }else {
-					  this.saldoConta-=30;
+					  this.contagemTalao-=qtd;
+					  this.debitarValor(30*qtd);
 					  this.registrarContagemMovimentosBancarios();
-					  this.registrarMovimentoBancario(new MovimentoBancario(30,"D"));
+					  System.out.println("Talão de cheque disponibilizado com sucesso");
 				  }	
 			     }else {
-			    	 System.out.println("Saldo insuficiente");
+			    	 System.out.println("Saldo insuficiente, efetue um deposito ");
 			     }
 				}
 	
@@ -37,9 +38,10 @@ public class ContaCorrente extends Conta{
 				this.saldoConta -= valorDebitado;
 				this.registrarContagemMovimentosBancarios();
 				this.registrarMovimentoBancario(new MovimentoBancario(valorDebitado, "D"));
+				System.out.println("Pagamento efetuado com Sucesso!");
 				
 			}else {
-				System.out.println("Saldo insuficient");
+				System.out.println("Saldo insuficiente");
 			}
 			}
 		

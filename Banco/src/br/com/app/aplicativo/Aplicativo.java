@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Aplicativo {
 
@@ -15,14 +16,14 @@ public class Aplicativo {
 	static ContaPoupanca minhaContaPoupanca = new ContaPoupanca();
 	static Scanner scanner = new Scanner(System.in);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		menuInicial();
 
 		scanner.close();
 	}
 	
 	// AUTOR: DANIEL
-	public static void menuInicial() {
+	public static void menuInicial() throws InterruptedException {
 		Character escolhaMenuInicial = '0';
 		do {
 			System.out.println("[NOME DO BANCO]");
@@ -55,7 +56,7 @@ public class Aplicativo {
 	}
 	
 	// AUTOR: DANIEL
-	public static void login() {	
+	public static void login() throws InterruptedException {	
 		Character escolhaLogin = '0';
 		do {
 			System.out.println("[NOME DO BANCO]");
@@ -165,7 +166,7 @@ public class Aplicativo {
 	}
 	
 	// AUTOR: DANIEL
-	public static void menuCriarConta() {
+	public static void menuCriarConta() throws InterruptedException {
 		Character escolhaMenuCriarConta = '0';
 		
 		do {
@@ -200,7 +201,34 @@ public class Aplicativo {
 				break;
 				}
 			case '2':{
-				// Criar Conta Corrente
+				// AUTOR: LUCAS PEREIRA
+				System.out.println("Olá aguarde já iremos iniciar o seu cadastro!");
+			    TimeUnit.SECONDS.sleep(2);
+				System.out.println("Por favor informe seu Nome: ");
+				String nomeClienteTemp = scanner.nextLine().toUpperCase();
+				System.out.println("Por favor informe seu CPF: ");
+				String cpfConta = scanner.nextLine();
+				System.out.println("Digite a Senha:");
+				String senhaTemp = scanner.nextLine();
+								
+				boolean verificacaoSenha = verificarSenha(senhaTemp);
+				while(!verificacaoSenha) {
+					System.out.println();
+					System.out.print("⚠ A SUA SENHA DEVE CONTER PELO MENOS UM CARACTERE ESPECIAL. POR FAVOR, DIGITE NOVAMENTE: ");
+					senhaTemp = scanner.nextLine();
+					verificacaoSenha = verificarSenha(senhaTemp);
+					System.out.println();
+				}
+					
+				System.out.println();
+				ContaCorrente contaCorrenteTemp = new ContaCorrente(nomeClienteTemp, cpfConta, senhaTemp);
+				minhaContaCorrente = contaCorrenteTemp;
+				System.out.println("xxxxxxConta Corrente criada com Sucessoxxxxx!");
+				System.out.println();
+				System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+				
+				menuContaCorrente();
+							
 				break;
 				}
 			case '3':{
@@ -220,14 +248,7 @@ public class Aplicativo {
 				System.out.print("SENHA: ");
 				String senhaTemp = scanner.nextLine();
 				
-				// VERIFICANDO SENHA
-				// RETORNA UM BOOLEANO: TRUE SE A SENHA TIVER UM CARACTERE ESPECIAL,
-				// FALSE SE A SENHA NÃO TIVER UM CARACTERE ESPECIAL.
-				// O LOOP WHILE É EXECUTADO ATÉ QUE A SUA CONDIÇÃO SE TORNE FALSA.
-				// NESTE CASO, SE O USUÁRIO NÃO DIGITAR UM CARACTERE, O RETORNO VAI SER FALSO, CERTO? 
-				// MAS NO WHILE, EU USO NEGAÇÃO DO FALSO PARA TRANSFORMÁ-LO EM VERDADEIRO,
-				// ENTÃO VAI EXECUTAR ATÉ QUE O RETORNO DE VERIFICAR SENHA SEJA VERDADEIRO (A SENHA POSSUI UM CARACTERE ESPECIAL)
-				// PORQUE AÍ A NEGAÇÃO VAI TRANSFORMÁ-LO EM FALSO E O LOOP WHILE VAI PARAR DE SER EXECUTADO
+				
 				boolean verificacaoSenha = verificarSenha(senhaTemp);
 				while(!verificacaoSenha) {
 					System.out.println();
@@ -237,7 +258,7 @@ public class Aplicativo {
 				}
 				// FIM VERIFICAÇÃO SENHA
 				
-				System.out.println();
+				scanner.nextLine();
 				System.out.println("A SUA CONTA PJ ESTÁ SENDO CRIADA...");
 				ContaEmpresa contaEmpresaTemp = new ContaEmpresa(nomeTemp, cnpjTemp, numeroTemp, senhaTemp);
 				minhaContaEmpresa = contaEmpresaTemp;
@@ -340,9 +361,70 @@ public class Aplicativo {
 		// Criar Menu Conta Poupança
 	}
 	
-	// Autor
-	public static void menuContaCorrente() {
+	// Autor LUCAS
+	public static void menuContaCorrente() throws InterruptedException {
 		// Criar Menu Conta Corrente
+			char opcaoMenu = '0';
+			do {
+			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			System.out.println("xxxxxxEscolha alguma das opções abaixo:xxxxx ");
+			System.out.println();
+			System.out.println("1. Depósito");
+			System.out.println("2. Talão de Cheque");
+			System.out.println("3. Pagamentos");
+			System.out.println("4. Extrato da conta");
+			System.out.println("5. Sair");	
+			System.out.println();
+			System.out.print("Digite a opção desejada: ");
+			opcaoMenu = scanner.next().charAt(0);
+			scanner.nextLine();
+			switch (opcaoMenu) {
+				case '1': {
+				System.out.println("Digite o valor que deseja depositar: ");
+			    double valor = scanner.nextDouble();
+			    scanner.nextLine();
+			    minhaContaCorrente.creditarValor(valor);
+			    System.out.println("Deposito efetuado com Sucesso!");
+			    System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+			    System.out.println();
+			    
+						
+			break;
+			}
+			case '2':{
+			     System.out.println("Informe a quantidade de talão de cheque que irá querer: ");
+			     int valor = scanner.nextInt();
+			     scanner.nextLine();
+			     minhaContaCorrente.pediTalao(valor);
+			        System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+				    System.out.println();
+			     break;
+			}
+			case '3':{
+			     System.out.println("Digite o valor que deseja efetuar o pagamento: ");
+			     double valor = scanner.nextDouble();
+			     scanner.nextLine();
+			     minhaContaCorrente.debitarValor(valor);
+			        System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+				    System.out.println();
+			     break;
+			}
+			case '4':{
+				System.out.println("Aguarde que estamos gerando seu Extrato de Movimentação");
+				TimeUnit.SECONDS.sleep(2);
+				for (MovimentoBancario transacao: minhaContaCorrente.getExtratoMovimentoBancario()) {
+					System.out.println(transacao.toString());
+					System.out.println("-------------Extrato de Movimentação-----------!");
+				    System.out.println();
+				}
+				break;
+				}
+			case '5':{
+				System.out.println("Sair");
+			}		
+			}
+			}while(opcaoMenu!= '5');
+			
 	}
 	
 	// Autor
