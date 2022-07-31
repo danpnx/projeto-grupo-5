@@ -202,9 +202,9 @@ public class Aplicativo {
 				}
 			case '2':{
 				// AUTOR: LUCAS PEREIRA
-				System.out.println("Olá vamos iniciar o seu cadastro!");
+				System.out.println("Olá aguarde já iremos iniciar o seu cadastro!");
 			    TimeUnit.SECONDS.sleep(2);
-				System.out.println("Por favor informe seu Nome Completo: ");
+				System.out.println("Por favor informe seu Nome: ");
 				String nomeClienteTemp = scanner.nextLine().toUpperCase();
 				System.out.println("Por favor informe seu CPF: ");
 				String cpfConta = scanner.nextLine();
@@ -217,15 +217,18 @@ public class Aplicativo {
 					System.out.print("⚠ A SUA SENHA DEVE CONTER PELO MENOS UM CARACTERE ESPECIAL. POR FAVOR, DIGITE NOVAMENTE: ");
 					senhaTemp = scanner.nextLine();
 					verificacaoSenha = verificarSenha(senhaTemp);
+					System.out.println();
 				}
 					
 				System.out.println();
 				ContaCorrente contaCorrenteTemp = new ContaCorrente(nomeClienteTemp, cpfConta, senhaTemp);
 				minhaContaCorrente = contaCorrenteTemp;
-				System.out.println("A sua Conta Corrente foi criada com Sucesso!");
-				System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+				System.out.println("xxxxxxConta Corrente criada com Sucessoxxxxx!");
+				System.out.println();
+				System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+				
 				menuContaCorrente();
-			
+							
 				break;
 				}
 			case '3':{
@@ -356,9 +359,69 @@ public class Aplicativo {
 		// Criar Menu Conta Poupança
 	}
 	
-	// Autor
+	// Autor LUCAS
 	public static void menuContaCorrente() throws InterruptedException {
 		// Criar Menu Conta Corrente
+			char opcaoMenu = '0';
+			do {
+			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			System.out.println("xxxxxxEscolha alguma das opções abaixo:xxxxx ");
+			System.out.println();
+			System.out.println("1. Depósito");
+			System.out.println("2. Talão de Cheque");
+			System.out.println("3. Pagamentos");
+			System.out.println("4. Extrato da conta");
+			System.out.println("5. Sair");	
+			System.out.println();
+			System.out.print("Digite a opção desejada: ");
+			opcaoMenu = scanner.next().charAt(0);
+			scanner.nextLine();
+			switch (opcaoMenu) {
+				case '1': {
+				System.out.println("Digite o valor que deseja depositar: ");
+			    double valor = scanner.nextDouble();
+			    scanner.nextLine();
+			    minhaContaCorrente.creditarValor(valor);
+			    System.out.println("Deposito efetuado com Sucesso!");
+			    System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+			    System.out.println();
+			    
+						
+			break;
+			}
+			case '2':{
+			     System.out.println("Informe a quantidade de talão de cheque que irá querer: ");
+			     int valor = scanner.nextInt();
+			     scanner.nextLine();
+			     minhaContaCorrente.pediTalao(valor);
+			        System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+				    System.out.println();
+			     break;
+			}
+			case '3':{
+			     System.out.println("Digite o valor que deseja efetuar o pagamento: ");
+			     double valor = scanner.nextDouble();
+			     scanner.nextLine();
+			     minhaContaCorrente.debitarValor(valor);
+			        System.out.println("Saldo:" + minhaContaCorrente.getSaldoConta());
+				    System.out.println();
+			     break;
+			}
+			case '4':{
+				System.out.println("Aguarde que estamos gerando seu Extrato de Movimentação");
+				TimeUnit.SECONDS.sleep(2);
+				for (MovimentoBancario transacao: minhaContaCorrente.getExtratoMovimentoBancario()) {
+					System.out.println(transacao.toString());
+					System.out.println("-------------Extrato de Movimentação-----------!");
+				    System.out.println();
+				}
+				break;
+				}
+			case '5':{
+				System.out.println("Sair");
+			}		
+			}
+			}while(opcaoMenu!= '5');
 			
 	}
 	
