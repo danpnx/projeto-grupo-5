@@ -4,6 +4,14 @@ public class ContaEspecial extends Conta{
 	
 	private double saldoConta;
 	private double limiteConta = 1000;
+	
+	public ContaEspecial(){}
+	
+	public ContaEspecial(String cpf, int numeroDaConta) {
+		this.setCpfConta(cpf);
+		this.setNumeroConta(numeroDaConta);
+		this.setContaAtiva(true);
+	}
 
 	
 	public void setSaldoConta(double novoSaldo) {

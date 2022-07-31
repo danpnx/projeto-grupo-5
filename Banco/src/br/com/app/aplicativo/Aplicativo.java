@@ -233,7 +233,33 @@ public class Aplicativo {
 				}
 			case '3':{
 				// Criar Conta Especial
+				System.out.println("------------------------------");
+				
+				System.out.print("CPF: ");
+				String cpf = scanner.nextLine();
+				
+				System.out.print("NÚMERO DA CONTA: ");
+				int numero = scanner.nextInt();
+				
+				System.out.print("SENHA: ");
+				String senha = scanner.nextLine();
+				
+				boolean senhaValida = verificarSenha(senha);
+				while (!senhaValida) {
+					System.out.println();
+					System.out.println("A SUA SENHA DEVE CONTER PELO MENOS UM CARACTERE ESPECIAL. POR FAVOR, DIGITE NOVAMENTE: ");
+					System.out.print("SENHA: ");
+					senha = scanner.nextLine();
+					senhaValida = verificarSenha(senha);
+					scanner.nextLine();
+				}
+				
+				minhaContaEspecial = new ContaEspecial(cpf, numero);
+				System.out.println("CONTA ESPECIAL CRIADA COM SUCESSO!");
+				System.out.println("------------------------------");
+				menuContaEspecial();
 				break;
+				
 				}
 			case '4':{
 				// Criar Conta Empresarial
