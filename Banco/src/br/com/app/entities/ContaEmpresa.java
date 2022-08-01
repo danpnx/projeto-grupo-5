@@ -184,7 +184,7 @@ public class ContaEmpresa extends Conta{
 					
 					System.out.println("COMPROVANTE");
 					System.out.println("VALOR: \tR$ " + valorPix);
-					System.out.println("DE: [NOME BANCO]");
+					System.out.println("DE: CONATUS INC.");
 					System.out.println("CNPJ: " + this.cnpjEmpresa);
 					System.out.println("AGÊNCIA: " + this.agenciaEmpresa + "\t   CONTA: " + this.getNumeroConta());
 					System.out.println("PARA: \t" + chavePix);
@@ -215,7 +215,7 @@ public class ContaEmpresa extends Conta{
 		System.out.println("CONTA" + "\t" + this.getNumeroConta());
 		System.out.println("CNPJ" + "\t" + this.cnpjEmpresa);
 		System.out.println("CHAVE PIX" + "\t" + this.chavePix);
-		System.out.println("[NOME DO BANCO] Inc. \tBANCO 123");
+		System.out.println("CONATUS INC. \tBANCO 123");
 	}
 	
 	public void extratoContaEmpresa() {
@@ -225,7 +225,6 @@ public class ContaEmpresa extends Conta{
 		}
 		System.out.println();
 		System.out.println("Número de movimentações bancárias: " + this.getContagemMovimentos());
-		System.out.println();
 	}
 	
 	public void pedirEmprestimo(double valorEmprestimo) {
@@ -379,7 +378,7 @@ public class ContaEmpresa extends Conta{
 					System.out.println();
 					double valorTempCambiado = valorCambio * 5.17;
 					this.creditarValor(valorTempCambiado);
-					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "CRÉDITO INTERNACIONAL DÓLAR"));
+					this.registrarMovimentoBancario(new MovimentoBancario(valorTempCambiado, "CRÉDITO INTERNACIONAL DÓLAR"));
 					System.out.println("PROCESSANDO... \t\t RECEBIDO!");
 					System.out.printf("R$ %.2f \t→\t U$D %.2f", valorTempCambiado,valorCambio);
 					System.out.println();
@@ -387,7 +386,7 @@ public class ContaEmpresa extends Conta{
 					System.out.println();
 					double valorTempCambiado = valorCambio * 5.29;
 					this.creditarValor(valorTempCambiado);
-					this.registrarMovimentoBancario(new MovimentoBancario(valorCambio, "CRÉDITO INTERNACIONAL EURO"));
+					this.registrarMovimentoBancario(new MovimentoBancario(valorTempCambiado, "CRÉDITO INTERNACIONAL EURO"));
 					System.out.println("PROCESSANDO... \t\t RECEBIDO!");
 					System.out.printf("R$ %.2f \t→\t € %.2f", valorTempCambiado,valorCambio);
 					System.out.println();

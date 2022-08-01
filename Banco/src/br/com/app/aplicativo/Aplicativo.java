@@ -28,8 +28,8 @@ public class Aplicativo {
 	public static void menuInicial() throws InterruptedException {
 		Character escolhaMenuInicial = '0';
 		do {
-			System.out.println("[NOME DO BANCO]");
-			System.out.println("[SLOGAN]");
+			System.out.println("CONATUS INC.");
+			System.out.println("TRANSFORMANDO O DINHEIRO EM OPORTUNIDADE");
 			System.out.println();
 			
 			System.out.println("\t1. LOGIN");
@@ -203,7 +203,7 @@ public class Aplicativo {
 			}
 			switch(escolhaMenuCriarConta) {
 			case '1':{
-				// Criar Conta Poupança
+				// CRIAR CONTA POUPANÇA
 				// AUTOR: ADRIANA MONZEN
 				System.out.println("> CONTA POUPANÇA");
 				System.out.println();
@@ -244,7 +244,7 @@ public class Aplicativo {
 				break;
 				}
 			case '2':{
-				// Criar Conta Corrente
+				// CRIAR CONTA CORRENTE
 				// AUTOR: LUCAS PEREIRA
 				System.out.println("> CONTA CORRENTE");
 				System.out.println();
@@ -280,14 +280,43 @@ public class Aplicativo {
 				break;
 				}
 			case '3':{
-				// Criar Conta Especial
+				// CRIAR CONTA ESPECIAL
 				// AUTOR: PEDRO SILVA
 				System.out.println("> CONTA ESPECIAL");
 				System.out.println();
+				
+				System.out.println("CPF");
+				System.out.print("→ ");
+				String cpf = scanner.nextLine();
+				
+				System.out.println("Número da conta");
+				System.out.print("→ ");
+				int numero = scanner.nextInt();
+				scanner.nextLine();
+				
+				System.out.println("Senha");
+				System.out.print("→ ");
+				String senha = scanner.nextLine();
+				
+				boolean senhaValida = verificarSenha(senha);
+				while (!senhaValida) {
+					System.out.println();
+					System.out.println("A sua senha deve conter pelo menos um caractere especial. Por favor, digite novamente");
+					System.out.print("→ ");
+					senha = scanner.nextLine();
+					senhaValida = verificarSenha(senha);
+				}
+				
+				minhaContaEspecial = new ContaEspecial(cpf, numero);
+				System.out.println();
+				System.out.println("Conta Especial criada com sucesso!");
+				menuContaEspecial();
+				
 				break;
+				
 				}
 			case '4':{
-				// Criar Conta Empresarial
+				// CRIAR CONTA ESPECIAL
 				// AUTOR: DANIEL AUGUSTO
 				System.out.println("> CONTA EMPRESARIAL");
 				System.out.println();
@@ -323,7 +352,7 @@ public class Aplicativo {
 				break;
 				}
 			case '5':{
-				// Criar Conta Estudantil 
+				// CRIAR CONTA ESTUDANTIL
 				// AUTOR: RIZIA RAQUEL
 				System.out.println("> CONTA ESTUDANTIL");
 				System.out.println();
@@ -406,12 +435,12 @@ public class Aplicativo {
 		return verificacao;
 	}
 	
+	// MENU CONTA POUPANÇA
 	// AUTOR: ADRIANA 
 	public static void menuContaPoupanca() {
-		// Criar Menu Conta Poupança
 		char escolhaMenu = '0';
 		do{
-			System.out.println("▬▬▬▬▬ [NOME DO BANCO]");
+			System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ Conatus Inc.");
 			System.out.println("▬▬▬▬ Conta Poupança");
 			System.out.println("▬▬▬ " + minhaContaPoupanca.getNomeConta());
 			System.out.println("▬▬ " + minhaContaPoupanca.getNumeroConta());
@@ -519,10 +548,10 @@ public class Aplicativo {
 		}while(escolhaMenu != '4');	
 	}
 	
+	// MENU CONTA CORRENTE
 	// AUTOR: LUCAS
 	public static void menuContaCorrente() throws InterruptedException {
-		// Criar Menu Conta Corrente
-			System.out.println("▬▬▬▬▬ [NOME DO BANCO]");
+			System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ Conatus Inc.");
 			System.out.println("▬▬▬▬ Conta Corrente");
 			System.out.println("▬▬▬ " + minhaContaCorrente.getNomeCliente());
 			System.out.println("▬▬ " + minhaContaCorrente.getNumeroConta());
@@ -591,25 +620,22 @@ public class Aplicativo {
 		}while(opcaoMenu!= '5');		
 	}
 	
+	// MENU CONTA ESPECIAL
 	// AUTOR: PEDRO
-	public static void menuContaEspecial() {
-		// Criar Menu Conta Especial
-		System.out.println("▬▬▬▬▬ [NOME DO BANCO]");
-		System.out.println("▬▬▬▬ Conta Especial");
-		System.out.println("▬▬▬ " + "~~nome~~");
-		System.out.println("▬▬ " + minhaContaEspecial.getNumeroConta());
-		System.out.println("▬ R$ " + minhaContaEspecial.getSaldoConta());
-		System.out.println();
-	}
-	
+	public static void menuContaEspecial() throws InterruptedException {
+		Menu menu = new Menu();
+		menu.telaContaEspecial(minhaContaEspecial);
+		menuInicial();
+}
+
+	// MENU CONTA EMPRESA
 	// AUTOR: DANIEL
 	public static void menuContaEmpresa() {
-		// Criar Menu Conta Empresa
 		Character escolhaMenuContaEmpresa = '0';
 		 do {
 			ArrayList<Character> opcoesMenuContaEmpresa = new ArrayList<>();
 			Collections.addAll(opcoesMenuContaEmpresa, '1','2','3','4','5','6','7','8');
-			System.out.println("▬▬▬▬▬▬ [NOME DO BANCO]");
+			System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ Conatus Inc.");
 			System.out.println("▬▬▬▬▬ Conta PJ");
 			System.out.println("▬▬▬▬ " + minhaContaEmpresa.getNomeEmpresa());
 			System.out.println("▬▬▬ " + minhaContaEmpresa.getCnpjEmpresa());
@@ -648,7 +674,7 @@ public class Aplicativo {
 				// PERFIL
 				System.out.println("Agência " + minhaContaEmpresa.getAgenciaEmpresa() + "\t" + "Conta PJ" + minhaContaEmpresa.getNumeroConta());
 				System.out.println(minhaContaEmpresa.getNomeEmpresa() + "\t" + "CNPJ " + minhaContaEmpresa.getCnpjEmpresa());
-				System.out.println("Banco 123 ★ [NOME BANCO] Inc.");
+				System.out.println("Banco 123 ★ Conatus Inc.");
 				break;
 				}
 			case '2':{
@@ -748,7 +774,8 @@ public class Aplicativo {
 					System.out.println("Forma de pagamento: Pix");
 					System.out.printf("Saldo atual: %.2f\n", minhaContaEmpresa.getSaldoConta());
 					System.out.println();
-					System.out.print("Chave Pix: ");
+					System.out.println("Chave Pix");
+					System.out.print("→ ");
 					String chavePixTemp = scanner.nextLine();
 					System.out.println("Valor");
 					System.out.print("→ R$ ");
@@ -759,7 +786,8 @@ public class Aplicativo {
 						System.out.print("→ R$ ");
 						valorTemp = Double.parseDouble(scanner.nextLine());
 					}
-					System.out.print("Senha: ");
+					System.out.println("Senha");
+					System.out.print("→ ");
 					String senhaTemp = scanner.nextLine();
 					
 					while(!minhaContaEmpresa.getSenhaUsuario().equals(senhaTemp)) {
@@ -1047,11 +1075,12 @@ public class Aplicativo {
 		 }while(!escolhaMenuContaEmpresa.equals('8'));
 	}
 	
-	// Autor: Rizia
+	// MENU CONTA POUPANÇA
+	// AUTOR: RIZIA
 		public static void menuContaEstudantil() {
 		char escolha = '0';
 		do {
-		System.out.println("▬▬▬▬▬ [NOME DO BANCO]");
+		System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ Conatus Inc.");
 		System.out.println("▬▬▬▬ Conta Estudante");
 		System.out.println("▬▬▬ " + minhaContaEstudantil.getNome());
 		System.out.println("▬▬ " + minhaContaEstudantil.getNumeroConta());
