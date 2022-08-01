@@ -251,12 +251,11 @@ public class Aplicativo {
 					System.out.print("SENHA: ");
 					senha = scanner.nextLine();
 					senhaValida = verificarSenha(senha);
-					scanner.nextLine();
 				}
 				
 				minhaContaEspecial = new ContaEspecial(cpf, numero);
+				System.out.println();
 				System.out.println("CONTA ESPECIAL CRIADA COM SUCESSO!");
-				System.out.println("------------------------------");
 				menuContaEspecial();
 				break;
 				
@@ -454,8 +453,12 @@ public class Aplicativo {
 	}
 	
 	// Autor
-	public static void menuContaEspecial() {
+	public static void menuContaEspecial() throws InterruptedException {
 		// Criar Menu Conta Especial
+		Menu menu = new Menu();
+		menu.telaContaEspecial(minhaContaEspecial);
+		menuInicial();
+		
 	}
 	
 	// AUTOR: DANIEL
