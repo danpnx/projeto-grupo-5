@@ -29,7 +29,7 @@ Um projeto não vive apenas de código, sendo assim, acho que vale a pena coment
 
 Antes de falar sobre o que nosso banco oferece, vale a pena citar um pouco sobre o nosso nome:
 
-A palavra "conatus" significa "esforço" na tradução literal do latim. Esse é o nosso espírito. Nos esforçamos para fazer o básico. Sofremos e aprendemos, mas não desistimos. Trabalhamos juntos com muita dedicação e implementamos funcionalidades que há poucos dias antes da apresentação nem sonhávamos ser capazes de implementar. Isso resumo o que foi o nosso projeto.
+A palavra "conatus" significa "esforço" na tradução literal do latim. Esse é o nosso espírito. Nos esforçamos para fazer o básico. Sofremos e aprendemos, mas não desistimos. Trabalhamos juntos com muita dedicação e implementamos funcionalidades que há poucos dias antes da apresentação nem sonhávamos ser capazes de implementar. Isso resume o que foi o nosso projeto.
 
 Bem, agora sim podemos falar sobre o que o nosso banco faz :wink:
 
@@ -63,4 +63,16 @@ Agradecemos aos professores Jefferson Itajahy e Jônatas Pereira por todo o apoi
 
 Em nome de toda a equipe do grupo 05, obrigado!
 
-Ass. Adriana Monzen, Daniel Augusto, Lucas Pereira, Marcelo Pimenta, Pedro Silva, Rízia Raquel
+**Integrantes**
+
+- [Adriana Monzen](https://github.com/monzendri "Adriana Monzen")
+
+- [Daniel Augusto](https://github.com/danpnx "Daniel Augusto")
+
+- [Lucas Pereira](https://github.com/LUCASPFS25 "Lucas Pereira")
+
+- [Marcelo Pimenta](https://github.com/marcelompimenta "Marcelo Pimenta")
+
+- [Pedro Silva](https://github.com/PedroHSilva "Pedro Silva")
+
+- [Rízia Raquel](https://github.com/riziaraquelbra "Rízia Raquel")
