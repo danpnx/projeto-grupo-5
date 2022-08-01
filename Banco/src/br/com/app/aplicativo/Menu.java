@@ -99,7 +99,6 @@ public class Menu {
 		System.out.println("Digite o número da conta");
 		System.out.print("→ ");
 		String numConta = entrada.nextLine();
-		//entrada.nextLine();
 		double saldoTotal = conta.getSaldoConta() + conta.getLimiteConta();
 		if (saldoTotal < valor)	{
 			System.out.println();

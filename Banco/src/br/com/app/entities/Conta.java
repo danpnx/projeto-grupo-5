@@ -17,8 +17,8 @@ public abstract class Conta {
 	static Scanner scanner = new Scanner(System.in);
 	
 	// MÉTODOS SUPERCLASSE CONTA
-	public abstract void debitarValor(double valorDebitado); // deve ser sobrescrito
-	public abstract void creditarValor(double valorCreditado); // deve ser sobrescrito
+	public abstract void debitarValor(double valorDebitado);
+	public abstract void creditarValor(double valorCreditado);
 	
 	public void registrarMovimentoBancario(MovimentoBancario movTemp) {
 		this.extratoMovimentoBancario.add(movTemp);

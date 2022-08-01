@@ -336,7 +336,7 @@ public class Aplicativo {
 				boolean verificacaoSenha = verificarSenha(senhaTemp);
 				while(!verificacaoSenha) {
 					System.out.println();
-					System.out.print("! A sua senha deve conter pelo menos um caractere especial. Por favor, digite novamente");
+					System.out.println("! A sua senha deve conter pelo menos um caractere especial. Por favor, digite novamente");
 					System.out.print("→ ");
 					senhaTemp = scanner.nextLine();
 					verificacaoSenha = verificarSenha(senhaTemp);
