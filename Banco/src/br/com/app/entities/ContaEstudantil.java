@@ -126,7 +126,7 @@ public class ContaEstudantil extends Conta{
         this.registrarContagemMovimentosBancarios();
         }
         else { 
-        System.out.println("Saldo insuficiente para realizar o empréstimo, sua solicitação ultrapassa o limite de empréstimo. Seu limite atual de empréstimo é: " + this.limiteEstudantil);
+        System.out.println("Saldo insuficiente para realizar o empréstimo, sua solicitação ultrapassa o limite de empréstimo.");
         }
     }
     

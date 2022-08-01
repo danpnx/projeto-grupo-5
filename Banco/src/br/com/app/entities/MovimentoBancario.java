@@ -46,6 +46,6 @@ public class MovimentoBancario {
 	// Daniel
 	@Override
 	public String toString() {
-		return dataMovimento + "\t" + tipoMovimento + "\t" + valorMovimento + "\n";
+		return dataMovimento + "\t" + "R$ " + valorMovimento + "\t" + tipoMovimento;
 	}
 }

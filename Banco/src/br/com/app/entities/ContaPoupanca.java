@@ -2,58 +2,68 @@ package br.com.app.entities;
 
 import java.time.LocalDate;
 
-//Adriana
+//Autor: Adriana
 public class ContaPoupanca extends Conta{
-	private int diaAniversarioPoupanca;
-	private double saldoConta;
+	private LocalDate diaAniversarioPoupanca=LocalDate.now();
+	private String nomeConta;
 
-	// Adriana
+	public ContaPoupanca() {}
+	
+	public ContaPoupanca(String nome, int numero, String cpf, String senha, double saldo, boolean ativa) {
+		this.setNomeConta(nome);
+		this.setNumeroConta(numero);
+		this.setCpfConta(cpf);
+		this.setSenhaUsuario(senha);
+		this.saldoConta = saldo;
+		this.setContaAtiva(ativa);
+	}
+	
 	@Override
-	public void setSaldoConta(double novoSaldo) {
-		this.saldoConta = novoSaldo;
-	}
+	public void debitarValor(double valorDebitado){
+		if(this.saldoConta>=valorDebitado) {
+			this.saldoConta -= valorDebitado;
+			this.registrarContagemMovimentosBancarios();
+			this.registrarMovimentoBancario(new MovimentoBancario(valorDebitado, "Saque"));
+			System.out.println("Processando o saque...");
+			System.out.println("Saque realizado com sucesso!");
+			}else {
+				System.out.println("Saldo Insuficiente");
+				System.out.println();
+	 }
+	}	
 	
-	// Adriana
 	@Override
-	public double getSaldoConta() {
-		return this.saldoConta;
+	public void creditarValor(double valorCreditado) {
+		this.saldoConta +=valorCreditado;
+		this.registrarContagemMovimentosBancarios();
+		this.registrarMovimentoBancario(new MovimentoBancario(valorCreditado, "Depósito"));
 	}
 	
-	// Adriana
-	public void pagarDebito(double valorDebito) {
-		// escrever código
+	public boolean verificarAniversario(LocalDate data) {
+		if(this.diaAniversarioPoupanca.equals(data)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
-	// Adriana
-	public void correcao() {
-		// escrever código
+	public void corrigirSaldo(double valor) {
+		this.saldoConta+=(this.saldoConta*0.005);
 	}
 	
-	// Adriana
-	public int getDiaAniversarioPoupanca() {
-		return this.diaAniversarioPoupanca;
-	}
-	
-	// Adriana
-	public void setDiaAniversarioPoupanca(int diaAniversarioPoupanca) {
+	public void setDiaAniversarioPoupanca(LocalDate	 diaAniversarioPoupanca) {
 		this.diaAniversarioPoupanca = diaAniversarioPoupanca;
 	}
 	
-	// Adriana
-	public void saque(double valor) {   // publig string sacar(double valor)
-		MovimentoBancario tr = new MovimentoBancario();
-		LocalDate dataTemp = LocalDate.now();
-		tr.setDataMovimento(dataTemp);
-		tr.setTipoMovimento("Saque");
-		tr.setValorMovimento(valor);
-		System.out.println("Informe o valor para saque: ");
-		if(this.saldoConta < valor) {
-			System.out.println("Saldo Insuficiente");   // return "Saldo Insuficiente"
-		}else {
-			this.registrarMovimentoBancario(tr);
-			this.saldoConta -= valor;
-			System.out.println("Saque efetuado com sucesso");
-			System.out.println("Saldo Atualizado" + this.saldoConta);  //return saldo
-		}
+	public LocalDate getDiaAniversarioPoupanca() {
+		return diaAniversarioPoupanca;
 	}
-}
+
+	public String getNomeConta() {
+		return nomeConta;
+	}
+
+	public void setNomeConta(String nomeConta) {
+		this.nomeConta = nomeConta;
+	}
+}	

@@ -15,8 +15,8 @@ public class Menu {
 	
 	public void telaCabecalho() {
 		System.out.println("--------------------------------------");
-		System.out.println(NOME_DO_BANCO);
-		System.out.println(SLOGAN);
+		System.out.println("Conatus Inc.");
+		System.out.println("Transformando o dinheiro em oportunidade");
 		System.out.println();
 	}
 	
@@ -27,23 +27,25 @@ public class Menu {
 		
 		this.telaCabecalho();
 		
-		System.out.println("\t1. PERFIL");
-		System.out.println("\t2. TRANSFERIR");
-		System.out.println("\t3. DEPOSITAR");
-		System.out.println("\t4. PAGAR CONTA");
-		System.out.println("\t5. EXTRATO BANCARIO");
-		System.out.println("\t6. SUPORTE");
-		System.out.println("\t7. SAIR");
+		System.out.println("\t1. Perfil");
+		System.out.println("\t2. Transferir");
+		System.out.println("\t3. Depositar");
+		System.out.println("\t4. Pagar Conta");
+		System.out.println("\t5. Extrato Bancário");
+		System.out.println("\t6. Suporte");
+		System.out.println("\t7. Sair");
 		
 		System.out.println();
 		
-		System.out.print("DIGITE O NUMERO DA OPCAO DESEJADA: ");
+		System.out.println("Digite o número da opção desejada");
+		System.out.print("→ ");
 		opcao = entrada.next().charAt(0);
 		entrada.nextLine();
 		
 		if (!opcoesDisponiveis.contains(opcao)) {
 			System.out.println();
-			System.out.print("OPCAO INVALIDA, TENTE NOVAMENTE: ");
+			System.out.println("Opção inválida. Por favor, digite novamente");
+			System.out.print("→ ");
 			System.out.println();
 			this.telaContaEspecial(conta);
 		}
@@ -89,67 +91,72 @@ public class Menu {
 	
 	public void telaTransferencia(ContaEspecial conta) {
 		this.telaCabecalho();
-		System.out.print("DIGITE O VALOR QUE DESEJA TRANSFERIR: ");
+		System.out.println("Digite o valor que deseja transferir");
+		System.out.print("→ R$ ");
 		double valor = entrada.nextDouble();
-		System.out.println();
-		System.out.print("DIGITE O NUMERO DA CONTA: ");
-		String numConta = entrada.next();
 		entrada.nextLine();
+		System.out.println();
+		System.out.println("Digite o número da conta");
+		System.out.print("→ ");
+		String numConta = entrada.nextLine();
+		//entrada.nextLine();
 		double saldoTotal = conta.getSaldoConta() + conta.getLimiteConta();
 		if (saldoTotal < valor)	{
 			System.out.println();
-			System.out.print("VOCE NAO POSSUI SALDO SUFICIENTE");
+			System.out.print("Você não possui saldo suficiente");
 			System.out.println();
 			this.telaContaEspecial(conta);
 			return;
 		}
 		conta.transferir(valor);
 		System.out.println();
-		System.out.println("TRANSFERENCIA REALIZADA COM SUCESSO!");
+		System.out.println("Transferência realizada com sucesso!");
 		System.out.println(String.format("SALDO ATUAL R$%.2f", conta.getSaldoConta()));
 		System.out.println(String.format("SALDO ESPECIAL R$%.2f", conta.getLimiteConta()));
 		System.out.println();
-		entrada.nextLine();
 		this.telaContaEspecial(conta);
 	}
 	
 	public void telaPagarConta(ContaEspecial conta) {
 		this.telaCabecalho();
-		System.out.print("DIGITE O CODIGO DO BOLETO: ");
+		System.out.println("Digite o código do boleto");
+		System.out.print("→ ");
 		entrada.nextLine();
 		System.out.println();
-		System.out.print("DIGITE O VALOR DA CONTA: ");
+		System.out.println("Digite o valor da conta");
+		System.out.print("→ R$ ");
 		double valor = entrada.nextInt();
+		entrada.nextLine();
 		double saldoTotal = conta.getSaldoConta() + conta.getLimiteConta();
 		if (saldoTotal < valor)	{
 			System.out.println();
-			System.out.print("VOCE NAO POSSUI SALDO SUFICIENTE");
+			System.out.print("Você não possui saldo suficiente");
 			System.out.println();
 			this.telaContaEspecial(conta);
 			return;
 		}
 		conta.pagarBoleto(valor);
 		System.out.println();
-		System.out.println("PAGAMENTO EFETUADO COM SUCESSO!");
+		System.out.println("Pagamento efetuado com sucesso!");
 		System.out.println(String.format("SALDO ATUAL R$%.2f", conta.getSaldoConta()));
 		System.out.println(String.format("SALDO ESPECIAL R$%.2f", conta.getLimiteConta()));
 		System.out.println();
-		entrada.nextLine();
 		this.telaContaEspecial(conta);
 		return;
 	}
 	
 	public void telaDeposito(ContaEspecial conta) {
 		this.telaCabecalho();
-		System.out.print("DIGITE O VALOR QUE DESEJA DEPOSITAR: ");
+		System.out.println("Digite o valor que deseja depositar");
+		System.out.print("→ R$ ");
 		double valor = entrada.nextDouble();
+		entrada.nextLine();
 		System.out.println();
 		conta.depositar(valor);
-		System.out.println("DEPSITO REALIZADO COM SUCESSO!");
+		System.out.println("Depósito realizado com sucesso!");
 		System.out.println(String.format("SALDO ATUAL R$%.2f", conta.getSaldoConta()));
 		System.out.println(String.format("SALDO ESPECIAL R$%.2f", conta.getLimiteConta()));
 		System.out.println();
-		entrada.nextLine();
 		this.telaContaEspecial(conta);
 		return;
 		
@@ -157,9 +164,11 @@ public class Menu {
 	
 	public void telaExtrato(ContaEspecial conta) {
 		System.out.println();
-		System.out.println(conta.getExtratoMovimentoBancario().toString());
+		System.out.println(">>>>> Extrato de Movimentação Bancária <<<<<");
+		for(MovimentoBancario movimento: conta.getExtratoMovimentoBancario()) {
+			System.out.println(movimento.toString());
+		}
 		System.out.println();
-		entrada.nextLine();
 		this.telaContaEspecial(conta);
 	}
 	
@@ -171,19 +180,22 @@ public class Menu {
 		System.out.println("(SUPORTE) suporte@email.com");
 		System.out.println("----------------------------------------------------------------");
 		System.out.println();
-		System.out.print("DIGITE SEU NOME: ");
+		System.out.println("Digite o seu nome");
+		System.out.print("→ ");
 		entrada.nextLine();
 		System.out.println();
-		System.out.print("ASSUNTO");
+		System.out.println("ASSUNTO");
+		System.out.print("→ ");
 		entrada.nextLine();
 		System.out.println();
-		System.out.println("MENSAGEM:");
+		System.out.println("MENSAGEM");
+		System.out.print("→ ");
 		entrada.nextLine();
+		System.out.println();
 		System.out.println("#######################################################");
 		System.out.println("###########  MENSAGEM ENVIADA COM SUCESSO  ############");
 		System.out.println("#######################################################");
 		System.out.println();
-		entrada.nextLine();
 		this.telaContaEspecial(conta);
 		
 	}
