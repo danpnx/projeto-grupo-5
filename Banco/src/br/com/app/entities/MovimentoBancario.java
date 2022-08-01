@@ -43,6 +43,6 @@ public class MovimentoBancario {
 
 	@Override
 	public String toString() {
-		return dataMovimento + "\t" + "R$ " + valorMovimento + "\t" + tipoMovimento;
+		return dataMovimento + "\tR$ " + valorMovimento + "\t" + tipoMovimento;
 	}
 }
