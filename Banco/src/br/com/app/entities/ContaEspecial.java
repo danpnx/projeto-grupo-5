@@ -43,14 +43,15 @@ public class ContaEspecial extends Conta{
 		this.registrarMovimentoBancario(new MovimentoBancario(valor, "DEPOSITO BANCARIO"));
 	}
 	
-	public boolean usarLimite(double valor) {
+	private void usarLimite(double valor) {
 		boolean temLimite = this.getLimiteConta() >= valor ? true : false;
 		if ( temLimite ) {
 			this.setLimiteConta(this.getLimiteConta() - valor);
-			return true;
+			return;
 		}
-		return false;
+		return;
 	}
+	
 	@Override
 	public void debitarValor(double valorDebitado) {
 		if (valorDebitado > this.getSaldoConta()) {
