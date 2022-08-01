@@ -63,4 +63,16 @@ Agradecemos aos professores Jefferson Itajahy e Jônatas Pereira por todo o apoi
 
 Em nome de toda a equipe do grupo 05, obrigado!
 
-Ass. Adriana Monzen, Daniel Augusto, Lucas Pereira, Marcelo Pimenta, Pedro Silva, Rízia Raquel
+**Integrantes**
+
+- [Adriana Monzen](https://github.com/monzendri "Adriana Monzen")
+
+- [Daniel Augusto](https://github.com/danpnx "Daniel Augusto")
+
+- [Lucas Pereira](https://github.com/LUCASPFS25 "Lucas Pereira")
+
+- [Marcelo Pimenta](https://github.com/marcelompimenta "Marcelo Pimenta")
+
+- [Pedro Silva](https://github.com/PedroHSilva "Pedro Silva")
+
+- [Rízia Raquel](https://github.com/riziaraquelbra "Rízia Raquel")
