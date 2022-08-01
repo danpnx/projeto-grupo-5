@@ -61,14 +61,14 @@ public class ContaEstudantil extends Conta{
         if(this.emprestimoSolicitado == 0) {
 			  System.out.println("Não existe nenhum valor de empréstimo a ser pago.");
 		} else {
-			if(valorCredito > emprestimoSolicitado) {
+			if(valorCredito > this.emprestimoSolicitado) {
 				double diferenca = valorCredito - this.emprestimoSolicitado;
 				this.saldoConta += diferenca;
 				valorCredito -= diferenca;
 				this.limiteEstudantil += valorCredito;
 		        this.emprestimoSolicitado -= valorCredito;
 		        this.saldoConta -= valorCredito;
-		        System.out.println("O pagamento total do empréstimo efetuado com sucesso!");
+		        System.out.println("O pagamento foi efetuado com sucesso!");
 		        this.registrarContagemMovimentosBancarios();
 		        this.registrarMovimentoBancario(new MovimentoBancario(valorCredito, "D"));
 			} else {
