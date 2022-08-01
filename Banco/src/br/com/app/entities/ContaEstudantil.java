@@ -104,17 +104,6 @@ public class ContaEstudantil extends Conta{
             System.out.println("Saldo insuficiente para realizar a transferência.");
         }
     }
-    
-    public void investirValor(double valorDebito) {
-        if(this.saldoConta >= valorDebito) {
-            this.saldoConta -= valorDebito;
-            System.out.println("Investimento efetuado com sucesso!");
-            this.registrarContagemMovimentosBancarios();
-            this.registrarMovimentoBancario(new MovimentoBancario(valorDebito, "D"));
-        } else {
-            System.out.println("Saldo insuficiente para realizar o investimento.");
-        }
-    }
 
     public void usarEstudantil(double valorEmprestimo) {
         if (this.limiteEstudantil >= valorEmprestimo) {

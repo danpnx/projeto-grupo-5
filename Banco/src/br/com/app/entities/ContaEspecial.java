@@ -7,9 +7,10 @@ public class ContaEspecial extends Conta{
 	
 	public ContaEspecial(){}
 	
-	public ContaEspecial(String cpf, int numeroDaConta) {
+	public ContaEspecial(String cpf, int numeroDaConta, String senha) {
 		this.setCpfConta(cpf);
 		this.setNumeroConta(numeroDaConta);
+		this.setSenhaUsuario(senha);
 		this.setContaAtiva(true);
 	}
 	

@@ -13,7 +13,7 @@ public class Aplicativo {
 
 	static ContaCorrente minhaContaCorrente = new ContaCorrente();
 	static ContaEmpresa minhaContaEmpresa = new ContaEmpresa();
-	static ContaEspecial minhaContaEspecial = new ContaEspecial();
+	static ContaEspecial minhaContaEspecial;
 	static ContaEstudantil minhaContaEstudantil = new ContaEstudantil();
 	static ContaPoupanca minhaContaPoupanca = new ContaPoupanca();
 	static Scanner scanner = new Scanner(System.in);
@@ -88,13 +88,14 @@ public class Aplicativo {
 				System.out.println("\t ▬ ▬ PESSOA FÍSICA ▬ ▬");
 				System.out.println();
 				
-				System.out.print("CPF: ");
+				System.out.println("CPF: ");
+				System.out.print("→ ");
 				String cpfLogin = scanner.nextLine();
-				System.out.print("SENHA: ");
+				System.out.println("SENHA");
+				System.out.print("→ ");
 				String senhaLogin = scanner.nextLine();
 				
-				Character retornoVerificarLoginPessoaFisica = '0';
-				retornoVerificarLoginPessoaFisica = verificarLoginPessoaFisica(cpfLogin, senhaLogin);
+				Character retornoVerificarLoginPessoaFisica = verificarLoginPessoaFisica(cpfLogin, senhaLogin);
 				
 				// Ao efetuar o login, abrirá o menu referente à conta
 				if(retornoVerificarLoginPessoaFisica.equals('1')) {
@@ -115,9 +116,11 @@ public class Aplicativo {
 			}else if(escolhaLogin.equals('2')) {
 				System.out.println("\t ▬ ▬ PESSOA JURÍDICA ▬ ▬");
 				System.out.println();
-				System.out.print("CNPJ: ");
+				System.out.println("CNPJ");
+				System.out.print("→ ");
 				String cnpjLogIn = scanner.nextLine();
-				System.out.print("SENHA: ");
+				System.out.println("SENHA");
+				System.out.print("→ ");
 				String senhaLogIn = scanner.nextLine();
 				
 				Character retornoVerificarLogInPessoaJuridica = '0';
@@ -137,25 +140,25 @@ public class Aplicativo {
 	
 	// AUTOR: DANIEL
 	public static Character verificarLoginPessoaFisica(String cpfLogin, String senhaLogin) {
-		char verificaLogIn = '0';
+		char verificaLogin = '0';
 		
 		if(minhaContaPoupanca.getCpfConta().equals(cpfLogin) && minhaContaPoupanca.getSenhaUsuario().equals(senhaLogin)) {
-			verificaLogIn = '1';
+			verificaLogin = '1';
 			
 		} else if(minhaContaCorrente.getCpfConta().equals(cpfLogin) && minhaContaCorrente.getSenhaUsuario().equals(senhaLogin)) {
-			verificaLogIn = '2';
+			verificaLogin = '2';
 			
 		}else if(minhaContaEspecial.getCpfConta().equals(cpfLogin) && minhaContaEspecial.getSenhaUsuario().equals(senhaLogin)) {
-			verificaLogIn = '3';
+			verificaLogin = '3';
 			
 		}else if(minhaContaEstudantil.getCpfConta().equals(cpfLogin) && minhaContaEstudantil.getSenhaUsuario().equals(senhaLogin)) {
-			verificaLogIn = '4';
+			verificaLogin = '4';
 			
 		}else {
-			verificaLogIn = '0';	
+			verificaLogin = '0';	
 		}
 		
-		return verificaLogIn;
+		return verificaLogin;
 	}
 	
 	// AUTOR: DANIEL
@@ -307,7 +310,7 @@ public class Aplicativo {
 					senhaValida = verificarSenha(senha);
 				}
 				
-				minhaContaEspecial = new ContaEspecial(cpf, numero);
+				minhaContaEspecial = new ContaEspecial(cpf, numero, senha);
 				System.out.println();
 				System.out.println("Conta Especial criada com sucesso!");
 				menuContaEspecial();
@@ -316,7 +319,7 @@ public class Aplicativo {
 				
 				}
 			case '4':{
-				// CRIAR CONTA ESPECIAL
+				// CRIAR CONTA EMPRESA
 				// AUTOR: DANIEL AUGUSTO
 				System.out.println("> CONTA EMPRESARIAL");
 				System.out.println();
@@ -625,9 +628,8 @@ public class Aplicativo {
 	public static void menuContaEspecial() throws InterruptedException {
 		Menu menu = new Menu();
 		menu.telaContaEspecial(minhaContaEspecial);
-		menuInicial();
+		//menuInicial();
 }
-
 	// MENU CONTA EMPRESA
 	// AUTOR: DANIEL
 	public static void menuContaEmpresa() {

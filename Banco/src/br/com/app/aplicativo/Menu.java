@@ -16,7 +16,7 @@ public class Menu {
 	public void telaCabecalho() {
 		System.out.println("--------------------------------------");
 		System.out.println("Conatus Inc.");
-		System.out.println("Transformando o dinheiro em oportunidade");
+		System.out.println("Cuide bem do seu dinheiro");
 		System.out.println();
 	}
 	
