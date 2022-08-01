@@ -28,10 +28,6 @@ public class ContaEspecial extends Conta{
 		this.limiteConta = limiteConta;
 	}
 	
-	private void pagarDebito(double valorDebito) {
-		// escrever código
-	}
-	
 	public void transferir(double valor) {
 		this.debitarValor(valor);
 		this.registrarMovimentoBancario(new MovimentoBancario(valor, "TRANSFERENCIA"));
