@@ -45,7 +45,7 @@ public class ContaCorrente extends Conta{
 			if(this.saldoConta>=valorDebitado){
 				this.saldoConta -= valorDebitado;
 				this.registrarContagemMovimentosBancarios();
-				this.registrarMovimentoBancario(new MovimentoBancario(valorDebitado, "DÉBITO"));
+				this.registrarMovimentoBancario(new MovimentoBancario(valorDebitado,"DÉBITO"));
 				System.out.println("Pagamento efetuado com Sucesso!");
 				
 			}else {

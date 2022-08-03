@@ -447,7 +447,7 @@ public class Aplicativo {
 			System.out.println("▬▬▬▬ Conta Poupança");
 			System.out.println("▬▬▬ " + minhaContaPoupanca.getNomeConta());
 			System.out.println("▬▬ " + minhaContaPoupanca.getNumeroConta());
-			System.out.println("▬ R$ " + minhaContaPoupanca.getSaldoConta());
+			System.out.printf("▬ R$ %.2f%n", minhaContaPoupanca.getSaldoConta());
 			System.out.println();
 			
 			System.out.println("\t1. Depósito");
@@ -554,14 +554,14 @@ public class Aplicativo {
 	// MENU CONTA CORRENTE
 	// AUTOR: LUCAS
 	public static void menuContaCorrente() throws InterruptedException {
+			char opcaoMenu = '0';
+			do {
 			System.out.println("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ Conatus Inc.");
 			System.out.println("▬▬▬▬ Conta Corrente");
 			System.out.println("▬▬▬ " + minhaContaCorrente.getNomeCliente());
 			System.out.println("▬▬ " + minhaContaCorrente.getNumeroConta());
-			System.out.println("▬ R$ " + minhaContaCorrente.getSaldoConta());
+			System.out.printf("▬ R$ %.2f%n", minhaContaCorrente.getSaldoConta());
 			System.out.println();
-			char opcaoMenu = '0';
-			do {
 			System.out.println();
 			System.out.println("\t1. Depósito");
 			System.out.println("\t2. Talão de Cheque");
@@ -643,9 +643,9 @@ public class Aplicativo {
 			System.out.println("▬▬▬ " + minhaContaEmpresa.getCnpjEmpresa());
 			System.out.println("▬▬ " + minhaContaEmpresa.getNumeroConta());
 			if(minhaContaEmpresa.isContaAtiva()) {
-				System.out.println("▬ R$ " + minhaContaEmpresa.getSaldoConta());
+				System.out.printf("▬ R$ %.2f%n", minhaContaEmpresa.getSaldoConta());
 			} else {
-				System.out.println("▬ Inativa" + minhaContaEmpresa.getSaldoConta());
+				System.out.println("▬ Inativa");
 			}
 			System.out.println();
 			
@@ -1086,7 +1086,7 @@ public class Aplicativo {
 		System.out.println("▬▬▬▬ Conta Estudante");
 		System.out.println("▬▬▬ " + minhaContaEstudantil.getNome());
 		System.out.println("▬▬ " + minhaContaEstudantil.getNumeroConta());
-		System.out.println("▬ R$ " + minhaContaEstudantil.getSaldoConta());
+		System.out.printf("▬ R$ %.2f%n", minhaContaEstudantil.getSaldoConta());
 		System.out.println();
 
 		System.out.println("1. Extrato da conta");
