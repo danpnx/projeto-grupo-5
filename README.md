@@ -59,7 +59,7 @@ O que falar da Conta PJ que eu nem conheço mas já considero "pakas". Deixando 
 
 ### Considerações
 
-Agradecemos aos professores Jefferson Itajahy e Jônatas Pereira por todo o apoio e suporte dado ao longo de todo o curso ministrado por eles e coordenado pela Digital House. Gostaríamos também de agradecer à Empiricus pela bolsa oferecida. Aprendemos muito durante esses quase dois mesês de Coding Tank e estamos mais do que preparados para os próximos desafios.
+Agradecemos aos professores Jefferson Itajahy e Jônatas Pereira por todo o apoio e suporte dado ao longo de todo o curso ministrado por eles e coordenado pela Digital House. Gostaríamos também de agradecer à Empiricus pela bolsa oferecida. Aprendemos muito durante esses quase dois meses de Coding Tank e estamos mais do que preparados para os próximos desafios.
 
 Em nome de toda a equipe do grupo 05, obrigado!
 
